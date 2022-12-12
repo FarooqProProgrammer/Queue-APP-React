@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import {Modal,Input } from 'antd';
 import { GoogleAuthProvider,getAuth ,signInWithPopup} from "firebase/auth";
-import {  FacebookAuthProvider } from "firebase/auth";
+import {  FacebookAuthProvider,GithubAuthProvider  } from "firebase/auth";
 import app from '../../config/Firebase';
 
 function Header() {
@@ -15,7 +15,33 @@ function Header() {
   const auth  = getAuth(app)
   const provider = new GoogleAuthProvider();
   const provider_fb = new FacebookAuthProvider();
+  const provider_gb = new GithubAuthProvider();
   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+
+
+  const Gb = ()=>{
+    signInWithPopup(auth, provider_gb)
+  .then((result) => {
+    // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+    const credential = GithubAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // The signed-in user info.
+    const user = result.user;
+    console.log(user);
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GithubAuthProvider.credentialFromError(error);
+    // ...
+  });
+  }
 
 
   const fb = ()=>{
@@ -109,6 +135,8 @@ function Header() {
 
         <Button className='w-full' onClick={GoogleLogin}>Login With Google</Button>
         <Button className='w-full' onClick={fb}>Login With Facebook</Button>
+        <Button className='w-full' onClick={Gb}>Login With Github</Button>
+        
         
         </div>
 
