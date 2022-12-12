@@ -11,6 +11,7 @@ import {  FacebookAuthProvider,GithubAuthProvider  } from "firebase/auth";
 import app from '../../config/Firebase';
 
 function Header() {
+  console.log("Pakistan");
 
   const auth  = getAuth(app)
   const provider = new GoogleAuthProvider();
