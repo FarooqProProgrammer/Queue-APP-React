@@ -134,7 +134,7 @@ function Header() {
 
 
         <Button className='w-full' onClick={GoogleLogin}>Login With Google</Button>
-        <Button className='w-full' onClick={fb}>Login With Facebook</Button>
+        {/* <Button className='w-full' onClick={fb}>Login With Facebook</Button> */}
         <Button className='w-full' onClick={Gb}>Login With Github</Button>
         
         
