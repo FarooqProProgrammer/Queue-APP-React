@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import {Modal,Input } from 'antd';
-import { GoogleAuthProvider,getAuth ,signInWithPopup} from "firebase/auth";
+import { GoogleAuthProvider,getAuth ,signInWithPopup,signInWithEmailAndPassword} from "firebase/auth";
 import {  FacebookAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
 import app from '../../config/Firebase';
 import { doc, getFirestore, setDoc} from "firebase/firestore"; 
@@ -212,10 +212,36 @@ const userAdd = async(id)=>{
   }
 
   const SignIn = ()=>{
-
+    console.log(email);
+    console.log(password);
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user);
+      success()
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      errors()
+    });
+  
 
 
   } 
+  const errors = () => {
+    Modal.error({
+      title: 'This is an error message',
+      content: 'some messages...some messages...',
+    });
+  };
+
+  const success = () => {
+    Modal.success({
+      content: 'Login SuccessFully',
+    });
+  };
 
 
   return (

@@ -1,4 +1,4 @@
-import { doc, getDoc, getFirestore, startAfter } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, startAfter,collection,addDoc,setDoc,updateDoc} from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { useParams ,Link } from 'react-router-dom'
@@ -50,6 +50,68 @@ function Tokens() {
 
 
 
+    const [Total,setTotal] = useState();
+    const [Start,setStart] = useState()
+
+
+
+
+    //  ======================= Add Token Info ==============================
+    
+   async function AddToken(){
+      const docRef = await setDoc(doc(db, `/Company/${id}/Tokens`, `Tokens${id}`), {
+        TotalTokens: Total,
+        start_token: Start
+      });
+      console.log("Document written with ID: ", docRef.id);  
+    }
+
+
+    useEffect(()=> {
+        token()
+    },[])
+
+
+    const [tokess,setToken] = useState([])
+
+    const token = async() =>{
+      const docRef = doc(db, `/Company/${id}/Tokens/Tokens${id}`);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log(docSnap.data());
+        setToken(docSnap.data())
+      } else {
+        
+        console.log("No such document!");
+      }
+
+
+    }
+
+
+
+
+    // =====================================================================================
+    const [updateToken,setupdate] = useState(tokess.TotalTokens)
+    const update = async() =>{
+      
+      console.log(tokess.TotalTokens);
+      setupdate(updateToken + 1)
+    
+      const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
+
+      // Set the "capital" field of the city 'DC'
+      await updateDoc(washingtonRef, {
+        TotalTokens: updateToken
+      });
+
+
+    }
+
+
+
+
 
   return (
     <div>
@@ -94,9 +156,10 @@ function Tokens() {
 
 
 
-    <Button className="bt btn btn-primary absolute left-[664px] top-[129px]">Generate Your Token</Button>
-    <div class="w-[100px]  h-[100px] border-2 border-black">
-   
+    
+    <div class="w-[250px]  h-[150px] border-2 border-black">
+    <Button className="w-full bt btn btn-primary " onClick={update}>Update Token</Button>
+         <p className='text-4xl font-black text-center'>{tokess.TotalTokens}</p>
     </div>
 
 
@@ -108,8 +171,10 @@ function Tokens() {
 
 
       <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-       <div className='w-[100%] h-[300px] border-2 border-black'>
-
+       <div className='w-[100%] h-[300px] border-2 border-black flex flex-col justify-around items-center'>
+            <Input className='w-[80%]' onChange={(e)=> setTotal(e.target.value)} placeholder='Enter Daily Token Start Limit'/>
+            <Input className='w-[80%]' onChange={(e)=> setStart(e.target.value)}  placeholder='Enter Daily Token Limit'/>
+            <Button onClick={AddToken}>Generate</Button>
       </div>
 
       </Modal>
