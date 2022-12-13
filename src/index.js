@@ -13,6 +13,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Admin from './pages/Admin';
+import Tokens from './pages/Tokens';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,9 @@ const router = createBrowserRouter([
   {
     path:"/Admin",
     element:<Admin/>
+  },{
+    path:"/Token/:id",
+    element:<Tokens/>
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
