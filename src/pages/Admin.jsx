@@ -6,6 +6,7 @@ import { useState } from 'react';
 import app from '../config/Firebase';
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { getStorage, ref ,uploadBytes } from "firebase/storage";
+import Companies from '../components/All Companies/Companies';
 
 function Admin() {
 
@@ -21,6 +22,7 @@ function Admin() {
 
     const Company_Name = (e)=>{
         setCompanyName(e.target.value)
+        console.log(e.target.value);
     }
     const Company_year = (e)=>{
         setCompanyYear(e.target.value)
@@ -32,6 +34,20 @@ function Admin() {
         setEndTime(e.target.value)
     }
 
+
+    const SubmitInfo =async ()=>{
+      console.log(company_name);
+      console.log(company_year);
+      console.log(stTime);
+      console.log(edTime);
+      const docRef = await addDoc(collection(db, "Company"), {
+        Company_Name: company_name,
+        StartingYear:company_year,
+        Start_timing:stTime,
+        End_Time:edTime
+      });
+      console.log("Document written with ID: ", docRef.id);
+    }
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,15 +89,23 @@ const handleChange = (e)=>{
 
 
 
+      <Companies/>
+
+
+
+{/* ================================================================================================ */}
+
 
         <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <div className='w-full h-[400px] flex flex-col justify-around items-center'>
 
-                        <Input onClick={Company_Name} placeholder='Enter Your Company Name' />
-                        <Input onClick={Company_year} placeholder='Company Starting Year' />
+                        <Input onChange={Company_Name} placeholder='Enter Your Company Name' />
+                        <Input onChange={Company_year} placeholder='Company Starting Year' />
                         {/* <Input type='file' onChange={handleChange}/> */}
-                        <Input onClick={start_timing} placeholder='Enter Start Timing'/>
-                        <Input onClick={End_Time} placeholder='Enter Close Timing'/>
+                        <Input onChange={start_timing} placeholder='Enter Start Timing'/>
+                        <Input onChange={End_Time} placeholder='Enter Close Timing'/>
+
+                        <Button onClick={SubmitInfo}>Submit Information</Button>
 
             </div>
         </Modal>
