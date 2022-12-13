@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate,Link } from 'react-router-dom'
 
 const HeroBox = () => {
+  // const navigate = useNavigate();
   return (
     <div className='w-full h-[500px] border-2 border-black grid grid-rows-1 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 place-items-center	'>
                 
@@ -9,8 +11,8 @@ const HeroBox = () => {
                 </div>
 
                 <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Are You Company</button>
-                <button type="button" class="btn btn-primary">Are You Finding a Token</button>
+                <Link to="/Admin" type="button" class="btn btn-primary" >Are You Company</Link>
+                <Link to="/Admin" type="button" class="btn btn-primary">Are You Finding a Token</Link>
                 </div>
         
     </div>

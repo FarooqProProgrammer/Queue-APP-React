@@ -12,12 +12,17 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Admin from './pages/Admin';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home/>,
   },
+  {
+    path:"/Admin",
+    element:<Admin/>
+  }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
