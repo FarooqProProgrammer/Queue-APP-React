@@ -69,7 +69,7 @@ function Tokens() {
 
     useEffect(()=> {
         token()
-    },[])
+    })
 
 
     const [tokess,setToken] = useState([])
@@ -97,13 +97,16 @@ function Tokens() {
     const update = async() =>{
       
       console.log(tokess.TotalTokens);
-      setupdate(updateToken + 1)
+      
+
+
+      if(tokess.start_token === tokess.TotalTokens){}
     
       const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
 
       // Set the "capital" field of the city 'DC'
       await updateDoc(washingtonRef, {
-        TotalTokens: updateToken
+        TotalTokens:tokess.TotalTokens + 1
       });
 
 

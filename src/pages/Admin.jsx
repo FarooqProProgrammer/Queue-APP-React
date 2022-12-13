@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Header'
 import {BsFillPlusSquareFill} from 'react-icons/bs'
-import { Button,Input, Modal } from 'antd';
+import { Button,Input, Modal ,Space} from 'antd';
 import { useState } from 'react';
 import app from '../config/Firebase';
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { getStorage, ref ,uploadBytes } from "firebase/storage";
 import Companies from '../components/All Companies/Companies';
-
+import { Country, State, City }  from 'country-state-city';
+import { AudioOutlined } from '@ant-design/icons';
 function Admin() {
 
     const storage = getStorage(app)
@@ -44,7 +45,8 @@ function Admin() {
         Company_Name: company_name,
         StartingYear:company_year,
         Start_timing:stTime,
-        End_Time:edTime
+        End_Time:edTime,
+        Country:country_name
       });
       console.log("Document written with ID: ", docRef.id);
     }
@@ -70,12 +72,47 @@ function Admin() {
 // =====================================================================================================
 
 // ========================================================================================================
-const handleChange = (e)=>{
-    console.log(e.target.files[0]);
-    const name = e.target.files[0].name
-    console.log(name);
-}
+  const [country,setCountry] = useState([])    
+useEffect(()=>{
+      
+      console.log(Country.getAllCountries())
+      setCountry(Country.getAllCountries())
+      console.log(State.getAllStates())
+    },[])
 
+
+    const { Search } = Input;
+    const suffix = (
+      <AudioOutlined
+        style={{
+          fontSize: 16,
+          color: '#1890ff',
+        }}
+      />
+    );
+    const success = (country) => {
+      Modal.success({
+        content: `${country} is Founded Successfully`,
+      });
+    };
+
+
+    const [country_name,setCountryName] = useState()
+    const onSearch = (value)=>{
+      setCountryName(value)
+        let flag = false
+        for(let i =0;i<country.length;i++){
+            if(country[i].name === value){
+              // console.log(i);
+                console.log(country[i].name);
+                success(country[i].name)
+            }
+            flag = true
+        }
+
+
+      console.log("Search");
+    }
 
   return (
     <div>
@@ -104,6 +141,14 @@ const handleChange = (e)=>{
                         {/* <Input type='file' onChange={handleChange}/> */}
                         <Input onChange={start_timing} placeholder='Enter Start Timing'/>
                         <Input onChange={End_Time} placeholder='Enter Close Timing'/>
+                        <Search
+      placeholder="input search text"
+      allowClear
+      onSearch={onSearch}
+      style={{
+        width: 200,
+      }}
+    />
 
                         <Button onClick={SubmitInfo}>Submit Information</Button>
 
