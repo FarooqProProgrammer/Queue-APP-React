@@ -1,5 +1,6 @@
 import { doc, getDoc, getFirestore, startAfter } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap';
 import { useParams ,Link } from 'react-router-dom'
 import Header from '../components/Header'
 import app from '../config/Firebase';
@@ -53,7 +54,7 @@ function Tokens() {
 
 
 
-      <div className="cards w-full h-[500px] border-2 border-black grid grid-rows-1 grid-cols-2 place-items-center">
+      <div className="cards relative w-full h-[500px] border-2 border-black grid grid-rows-1 grid-cols-2 place-items-center">
 
 
       <div class="card" style={{width:"18rem"}}>
@@ -70,8 +71,20 @@ function Tokens() {
         })}
        
     </ul>
+
+  
+
+
+
     </div>
     
+
+
+
+    <Button className="bt btn btn-primary absolute left-[664px] top-[129px]">Generate Your Token</Button>
+    <div class="w-[100px]  h-[100px] border-2 border-black">
+   
+    </div>
 
 
       </div>
