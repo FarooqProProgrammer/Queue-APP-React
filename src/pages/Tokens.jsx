@@ -4,11 +4,24 @@ import { Button } from 'react-bootstrap';
 import { useParams ,Link } from 'react-router-dom'
 import Header from '../components/Header'
 import app from '../config/Firebase';
-
+import {  Modal ,Input} from 'antd';
 
 
 
 function Tokens() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+
+
 
     const db = getFirestore(app)
     const [single,setSingle] = useState([]);
@@ -46,7 +59,7 @@ function Tokens() {
 
         <div className="container-fluid w-[80%] h-[70px] border-2 border-black flex justify-around items-center">
                 <p className='text-2xl font-black'>Generate Tokens For Today</p>
-                <Link className='btn btn-primary'>Generate Token</Link>
+                <Button onClick={showModal} className='btn btn-primary'>Generate Token</Button>
         </div>
 
 
@@ -88,6 +101,18 @@ function Tokens() {
 
 
       </div>
+
+
+
+
+
+
+      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+       <div className='w-[100%] h-[300px] border-2 border-black'>
+
+      </div>
+
+      </Modal>
     </div>
   )
 }

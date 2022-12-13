@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import {Modal,Input } from 'antd';
 import { GoogleAuthProvider,getAuth ,signInWithPopup} from "firebase/auth";
-import {  FacebookAuthProvider,GithubAuthProvider  } from "firebase/auth";
+import {  FacebookAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
 import app from '../../config/Firebase';
 import { doc, getFirestore, setDoc} from "firebase/firestore"; 
 import { async } from '@firebase/util';
@@ -20,6 +20,8 @@ function Header() {
 
   const [user_name,setUserName] = useState()
   const [user_Photo,setUserPhoto] = useState()
+
+  const [popup,setPopup] = useState(false)
   
 
   const auth  = getAuth(app)
@@ -168,6 +170,54 @@ function Header() {
 
 
 
+  // ===========================================================================
+
+  const [email,setEmail] = useState()
+  const [password,setpassword] = useState()
+  const [User,setUser] = useState()
+   
+
+  function AddUser(){
+    console.log(email);
+    console.log(password);
+    console.log(User);
+
+    createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    userAdd(user.uid)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+    // ..
+  });
+
+  }
+
+const userAdd = async(id)=>{
+    
+// Add a new document in collection "cities"
+    await setDoc(doc(db, "Users", id), {
+      id:id,
+      name: User,
+      email: email
+
+    });
+
+
+  }
+
+  const SignIn = ()=>{
+
+
+
+  } 
+
+
   return (
     <>
     <Navbar  expand="lg" className='bg-[#3498db]'>
@@ -199,10 +249,39 @@ function Header() {
 
 
     <Modal title="Basic Modal" className='flex flex-col justify-around items-center' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <div className="w-[400px] h-[300px] flex flex-col justify-around items-center">
-        <Input placeholder='Enter Email' className='w-[200px]' />
-        <Input placeholder='Enter Password' className='w-[200px]' />
-        <Button variant="primary" >Login</Button>
+        <div className="w-[400px] h-[400px] flex flex-col justify-around items-center">
+        
+        <div className="btns-group w-full h-[34px] border-2 border-black rounded-lg">
+          <div className="btn-group w-full h-[30px]">
+            <button className="btn btn-primary" onClick={()=>setPopup(false)}>Login</button>
+            <button className="btn btn-primary"  onClick={()=>setPopup(true)}>Sign Up</button>
+          </div>
+        </div>
+        
+
+
+        {popup === false ? 
+       
+        <div className="Login flex flex-col justify-around items-center">
+          <Input placeholder='Enter Email' onChange={(e)=>setEmail(e.target.value)} className='w-[200px]' />
+          <Input placeholder='Enter Password' onChange={(e)=> setpassword(e.target.value)} className='w-[200px]' />
+          <Button variant="primary" onClick={SignIn}>Login</Button>
+        </div>
+      :  
+      <div className="SignUp flex flex-col justify-around items-center">
+          <Input placeholder='Enter Email' onChange={(e)=>setEmail(e.target.value)} className='w-[200px]' />
+          <Input placeholder='Enter Password' onChange={(e)=> setpassword(e.target.value)} className='w-[200px]' />
+          <Input placeholder='Enter Name'  onChange={(e)=>setUser(e.target.value)} className='w-[200px]' />
+          <Button onClick={AddUser} variant="primary">Register</Button>
+        </div>
+
+
+    
+      }
+
+
+
+
 
 
 
