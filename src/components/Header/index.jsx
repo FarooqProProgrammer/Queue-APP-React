@@ -11,6 +11,7 @@ import {  FacebookAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword
 import app from '../../config/Firebase';
 import { doc, getFirestore, setDoc} from "firebase/firestore"; 
 import { async } from '@firebase/util';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -249,11 +250,17 @@ const userAdd = async(id)=>{
   };
 
 
+ const navigate =  useNavigate()
+
+  const Home = ()=>{
+    navigate("/")
+  }
+
   return (
     <>
     <Navbar  expand="lg" className='bg-[#3498db]'>
       <Container>
-        <Navbar.Brand href="#home" className='text-[25px] font-black text-white'>Queue App</Navbar.Brand>
+        <Navbar.Brand onClick={Home} href="#home" className='text-[25px] font-black text-white'>Queue App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav " className=''>
           <Nav className="me-auto ">

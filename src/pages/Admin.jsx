@@ -58,7 +58,8 @@ function Admin() {
         StartingYear:company_year,
         Start_timing:stTime,
         End_Time:edTime,
-        Country:country_name
+        Country:country_name,
+        Time:Date.now()
       });
       console.log("Document written with ID: ", docRef.id);
     }
