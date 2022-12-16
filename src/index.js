@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Admin from './pages/Admin';
 import Tokens from './pages/Tokens';
+import Tokensuser from './pages/Tokensuser';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   },{
     path:"/Token/:id",
     element:<Tokens/>
+  },
+  {
+    path:'/User',
+    element:<Tokensuser/>
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
