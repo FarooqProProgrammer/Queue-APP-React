@@ -106,7 +106,7 @@ function Tokens() {
 
       // Set the "capital" field of the city 'DC'
       await updateDoc(washingtonRef, {
-        TotalTokens:tokess.TotalTokens + 1
+        TotalTokens:tokess.TotalTokens != tokess.start_token ? tokess.TotalTokens+1 :"Token is full"
       });
 
 
@@ -125,6 +125,7 @@ function Tokens() {
         <div className="container-fluid w-[80%] h-[70px] border-2 border-black flex justify-around items-center">
                 <p className='text-2xl font-black'>Generate Tokens For Today</p>
                 <Button onClick={showModal} className='btn btn-primary'>Generate Token</Button>
+                <Button>Reset</Button>
         </div>
 
 
@@ -160,9 +161,9 @@ function Tokens() {
 
 
     
-    <div class="w-[250px]  h-[150px] border-2 border-black">
-    <Button className="w-full bt btn btn-primary " onClick={update}>Update Token</Button>
-         <p className='text-4xl font-black text-center'>{tokess.TotalTokens}</p>
+    <div class="w-[250px]  h-[150px] ">
+    <Button className="w-full bt btn btn-primary " onClick={tokess.TotalTokens != tokess.start_token ?update:""}>Update Token</Button>
+         <p className='text-4xl font-black text-center'>{tokess.TotalTokens != tokess.start_token ? tokess.TotalTokens :"Token is full"}</p>
     </div>
 
 

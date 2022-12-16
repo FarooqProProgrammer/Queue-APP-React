@@ -28,6 +28,10 @@ function Header() {
   const db = getFirestore(app)
   const provider = new GoogleAuthProvider();
   const provider_fb = new FacebookAuthProvider();
+  provider_fb.addScope('user_birthday');
+  provider_fb.setCustomParameters({
+    'display': 'popup'
+  });
   const provider_gb = new GithubAuthProvider();
   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
@@ -117,6 +121,7 @@ function Header() {
   
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       const credential = FacebookAuthProvider.credentialFromResult(result);
+      console.log(credential);
       const accessToken = credential.accessToken;
   
       // ...
