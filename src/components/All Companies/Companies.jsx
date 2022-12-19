@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { collection, query, onSnapshot, getFirestore } from "firebase/firestore";
+import { collection, query, onSnapshot, getFirestore, where } from "firebase/firestore";
 import app from '../../config/Firebase';
 import { Link } from 'react-router-dom';
+import { getAuth,onAuthStateChanged } from 'firebase/auth';
 
 const Companies = () => {
 
   const db = getFirestore(app)
-
+  const auth = getAuth(app)
+  
   const [Companies,setCompanies ] = useState([])
   console.log(Companies);
   console.log(typeof(Companies));
 
 
   useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // const uid = user.uid;
+        // console.log(uid);
+        console.log(user);
+        localStorage.setItem("uid",JSON.stringify(user.uid))
+    
+      } else {
+      }
+    });
+
     data()
   },[])
 
+  // ,where("user","==",auth.currentUser.uid)
+
   function data (){
-    const q = query(collection(db, "Company"));
+    const uid = JSON.parse(localStorage.getItem("uid"))
+    const q = query(collection(db, "Company"),where("user","==",uid));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const cities = [];
       querySnapshot.forEach((doc) => {

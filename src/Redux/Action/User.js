@@ -13,5 +13,5 @@ function setUserInfo(user) {
 }
 
 export {
-    setUser
+    setUserInfo
 }

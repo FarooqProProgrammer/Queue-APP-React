@@ -14,6 +14,9 @@ import {
 } from "react-router-dom";
 import Admin from './pages/Admin';
 import Tokens from './pages/Tokens';
+import Tokensuser from './pages/Tokensuser';
+import { Provider } from 'react-redux';
+import { store } from './Redux/Store';
 
 const router = createBrowserRouter([
   {
@@ -26,14 +29,18 @@ const router = createBrowserRouter([
   },{
     path:"/Token/:id",
     element:<Tokens/>
+  },
+  {
+    path:'/User',
+    element:<Tokensuser/>
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
         <RouterProvider router={router} />
 
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

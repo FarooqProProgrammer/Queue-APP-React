@@ -3,17 +3,22 @@ import Header from '../components/Header'
 import {BsFillPlusSquareFill} from 'react-icons/bs'
 import { Button,Input, Modal ,Space} from 'antd';
 import { useState } from 'react';
+
 import app from '../config/Firebase';
 import { collection, addDoc, getFirestore } from "firebase/firestore";
-import { getStorage, ref ,uploadBytes } from "firebase/storage";
+import { getStorage, ref ,uploadBytes,getDownloadURL,uploadBytesResumable } from "firebase/storage";
 import Companies from '../components/All Companies/Companies';
 import { Country, State, City }  from 'country-state-city';
 import { AudioOutlined } from '@ant-design/icons';
+import { getAuth } from 'firebase/auth';
 function Admin() {
 
     const storage = getStorage(app)
     const db = getFirestore(app)
+    const auth = getAuth(app)
 
+    const user = auth.currentUser;
+    console.log(user);
 
 // ===================================================================================================
     const [company_name,setCompanyName] = useState();
@@ -37,16 +42,24 @@ function Admin() {
 
 
     const SubmitInfo =async ()=>{
-      console.log(company_name);
-      console.log(company_year);
-      console.log(stTime);
-      console.log(edTime);
+      // console.log(company_name);
+      // console.log(company_year);
+      // console.log(stTime);
+      // console.log(edTime);
+
+      //  let url = uploadImage(img)
+      
+      // console.log(url);
+
+
       const docRef = await addDoc(collection(db, "Company"), {
+        user:user.uid,
         Company_Name: company_name,
         StartingYear:company_year,
         Start_timing:stTime,
         End_Time:edTime,
-        Country:country_name
+        Country:country_name,
+        Time:Date.now()
       });
       console.log("Document written with ID: ", docRef.id);
     }
@@ -75,7 +88,7 @@ function Admin() {
   const [country,setCountry] = useState([])    
 useEffect(()=>{
       
-      console.log(Country.getAllCountries())
+      // console.log(Country.getAllCountries())
       setCountry(Country.getAllCountries())
       console.log(State.getAllStates())
     },[])
@@ -114,6 +127,24 @@ useEffect(()=>{
       console.log("Search");
     }
 
+    const [img,setImage] = useState(null);
+    const [url,setUrl] = useState();
+
+    const handleChange = (event)=>{
+        setImage(event.target.files[0])
+        uploadImage(event.target.files[0])
+       
+    }
+
+    uploadImage(img)
+ 
+     async function uploadImage(image) {
+      console.log(image.name);
+      const storageRef = ref(storage, `images/${image.name}`)
+      uploadBytes(storageRef,image).then(()=>{
+        console.log("Image Uploaded");
+      })
+    }
   return (
     <div>
         <Header/>
@@ -138,7 +169,7 @@ useEffect(()=>{
 
                         <Input onChange={Company_Name} placeholder='Enter Your Company Name' />
                         <Input onChange={Company_year} placeholder='Company Starting Year' />
-                        {/* <Input type='file' onChange={handleChange}/> */}
+                        <Input type='file' onChange={(event)=>setImage(event.target.files[0])} />
                         <Input onChange={start_timing} placeholder='Enter Start Timing'/>
                         <Input onChange={End_Time} placeholder='Enter Close Timing'/>
                         <Search
@@ -150,7 +181,10 @@ useEffect(()=>{
       }}
     />
 
-                        <Button onClick={SubmitInfo}>Submit Information</Button>
+                        <Button onClick={
+                          SubmitInfo
+                          // uploadImage
+                          }>Submit Information</Button>
 
             </div>
         </Modal>

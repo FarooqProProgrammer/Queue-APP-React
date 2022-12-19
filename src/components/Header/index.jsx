@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Header() {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
+
   console.log("Pakistan");
   const [name,setName] = useState(false)
 
@@ -122,6 +124,7 @@ function Header() {
         photo:user.photoURL
       }
 
+      setName(true)
       dispatch(setUserInfo(userInfo))
   
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
@@ -269,10 +272,10 @@ const userAdd = async(id)=>{
           name == false ? <Button variant="primary" onClick={showModal} >Login</Button>:
           <>
           <div className="image w-[60px] h-[60px] border-2 border-black rounded-full">
-            <img className='w-full h-full rounded-full' src={user_Photo} alt="" />
+            <img className='w-full h-full rounded-full' src={user.photo} alt="" />
 
           </div>
-          <p><span>{user_name}</span></p>
+          <p><span>{user.Name}</span></p>
           </>
           }
 

@@ -12,7 +12,7 @@ const HeroBox = () => {
 
                 <div class="btn-group" role="group" aria-label="Basic example">
                 <Link to="/Admin" type="button" class="btn btn-primary" >Are You Company</Link>
-                <Link to="/Admin" type="button" class="btn btn-primary">Are You Finding a Token</Link>
+                <Link to="/User" type="button" class="btn btn-primary">Are You Finding a Token</Link>
                 </div>
         
     </div>
