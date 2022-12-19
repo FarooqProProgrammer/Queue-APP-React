@@ -11,10 +11,13 @@ import {  FacebookAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword
 import app from '../../config/Firebase';
 import { doc, getFirestore, setDoc} from "firebase/firestore"; 
 import { async } from '@firebase/util';
+import { setUserInfo } from '../../Redux/Action/User';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 function Header() {
+  const dispatch = useDispatch();
   console.log("Pakistan");
   const [name,setName] = useState(false)
 
@@ -114,6 +117,12 @@ function Header() {
       // The signed-in user info.
       const user = result.user;
       console.log(user);
+      const userInfo = {
+        Name:user.displayName,
+        photo:user.photoURL
+      }
+
+      dispatch(setUserInfo(userInfo))
   
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       const credential = FacebookAuthProvider.credentialFromResult(result);

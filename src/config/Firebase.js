@@ -5,14 +5,13 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAOSLRmAfl0UZZ7KtRrBpDZhDn5px8NlAE",
-  authDomain: "react-queue-b8448.firebaseapp.com",
-  projectId: "react-queue-b8448",
-  storageBucket: "react-queue-b8448.appspot.com",
-  messagingSenderId: "425545329104",
-  appId: "1:425545329104:web:f8240917431682d35331d5"
+  apiKey: "AIzaSyB37zFc-_m20TpYh-HpRDtQ2B0piZNAY_g",
+  authDomain: "whatsapp-87670.firebaseapp.com",
+  projectId: "whatsapp-87670",
+  storageBucket: "whatsapp-87670.appspot.com",
+  messagingSenderId: "298384279712",
+  appId: "1:298384279712:web:4bc83397b6a408d56ae1c5"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 

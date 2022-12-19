@@ -1,39 +1,11 @@
-import './App.css';
-import Home from './pages/Home'
-import Admin from './pages/Admin';
+import React from 'react'
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
-
-
-
-
-
-function App() {
-  
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home/>,
-  },
-  {
-    path:"/Admin",
-    element:<Admin/>
-  },
-]);
+const App = () => {
   return (
-    <>
-    
-    <RouterProvider router={router} />
-
-
-    </>
-  );
+    <div>
+        
+    </div>
+  )
 }
 
-export default App;
+export default App

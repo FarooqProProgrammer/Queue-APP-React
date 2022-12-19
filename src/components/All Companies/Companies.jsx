@@ -29,7 +29,7 @@ const Companies = () => {
   }
 
   return (
-    <div className='container h-[500px] border-2 border-black'>
+    <div className='container h-[auto] border-2 border-black'>
           <table class="table">
   <thead>
     <tr>
