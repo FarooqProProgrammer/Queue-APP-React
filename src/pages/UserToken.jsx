@@ -20,8 +20,7 @@ import {
   Button 
 } from "./TokenConfig"
 
-
-function Tokens() {
+function UserToken() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const storage = getStorage(app)
 
@@ -93,8 +92,8 @@ function Tokens() {
    async function AddToken(){
    
       const docRef = await setDoc(doc(db, `/Company/${id}/Tokens`, `Tokens${id}`), {
-        TotalTokens: Number(Start),
-        start_token: Total
+        TotalTokens: Total,
+        start_token: (Start)
         
       });
       //console.log("Document written with ID: ", docRef.id);  
@@ -158,18 +157,8 @@ function Tokens() {
     }
 
    
-    const [open,setOpen] = useState(false)
-    const showModals = () => {
-      setOpen(true);
-    };
-  
-    const handleOks = () => {
-      setOpen(false);
-    };
-  
-    const handleCancels = () => {
-      setOpen(false);
-    };
+
+
      
 
 
@@ -179,17 +168,7 @@ function Tokens() {
     <div>
       <Header/>
 
-      <div
-        style={{width:"100%",height:100,border:"2px solid black",
-      display:'flex',
-      justifyContent:"space-around",
-    alignItems:"center"}}
-      className="createCompanyTokes">
-          <p className="text-3xl font-black">Create Company Token</p>
 
-          <Button onClick={showModals}>Add Token</Button>
-          <Button onClick={Reset}>Reset</Button>
-      </div>
 
 
 
@@ -247,25 +226,9 @@ function Tokens() {
 
       </Modal>
 
-
-
-
-
-
-
-
-      <Modal title="Basic Modal" open={open} onOk={handleOks} onCancel={handleCancels}>
-        <div className="inoput w-full h-[300px] border-2 border-black flex flex-col justify-around items-center">
-        <Input type="text" onChange={(e)=> setTotal(e.target.value)} placeholder="Enter Item"/>
-        <Input type="text" onChange={(e)=> setStart(e.target.value)} placeholder="Enter Item"/>
-           
-          <Button onClick={AddToken}>Add Token</Button>
-        </div>
-      </Modal>
-
       <Footer/>
     </div>
   )
 }
 
-export default Tokens
+export default UserToken

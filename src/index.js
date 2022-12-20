@@ -17,6 +17,7 @@ import Tokens from './pages/Tokens';
 import Tokensuser from './pages/Tokensuser';
 import { Provider } from 'react-redux';
 import { store,persistor } from './Redux/Store';
+import UserToken from './pages/UserToken';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path:'/User',
     element:<Tokensuser/>
+  },
+  {
+    path:'/userToken/:id',
+    element:<UserToken/>
   }
 ]);
 const root = ReactDOM.createRoot(document.getElementById('root'));

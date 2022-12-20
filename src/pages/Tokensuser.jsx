@@ -95,7 +95,7 @@ text='Please wait us '
                     <tr key={item.id}>
                            <td> <p className='text-2xl font-black '>{item.Company_Name}</p></td>
                             <td><p className='text-2xl font-black '>{item.Country}</p></td>
-                            <td><Link to={`/Token/${item.id}`} className="btn btn-secondary">View</Link></td>
+                            <td><Link to={`/userToken/${item.id}`} className="btn btn-secondary">View</Link></td>
                     </tr>
     
                 )
