@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect ,useState} from 'react'
 
 import { 
   Header,BsFillPlusSquareFill,Button,Input,Modal,Space
-  ,useState,app,collection,addDoc,getFirestore,getStorage,ref,uploadBytes,
+  ,app,collection,addDoc,getFirestore,getStorage,ref,uploadBytes,
   uploadBytesResumable,getDownloadURL,Companies,Country,State,City,
   AudioOutlined,getAuth
  } from './AdminConfig'
  import {SubmitInfo} from "./AdminConfig/functions"
 import { Footer } from './HomeConfig'
+import { useSelector } from 'react-redux'
 function Admin() {
 
     const storage = getStorage(app)
@@ -18,8 +19,8 @@ function Admin() {
     //console.log(user);
 
 // ===================================================================================================
-    const [company_name,setCompanyName] = useState();
-    const [company_year,setCompanyYear] = useState();
+    const [company_name,setCompanyName] = useState("");
+    const [company_year,setCompanyYear] = useState("");
     const [stTime,setTiming] = useState()
     const [edTime,setEndTime] = useState()
     const [img,setImage] = useState(null);
@@ -40,7 +41,7 @@ function Admin() {
         setEndTime(e.target.value)
     }
     const [country_name,setCountryName] = useState()
-    const SubmitInfo =async (user,company_name,company_year,stTime,edTime,country_name,url)=>{
+    const SubmitInfo =async ()=>{
       console.log(user.uid);
       console.log(company_name);
       console.log(company_year);
@@ -55,22 +56,23 @@ function Admin() {
         StartingYear:company_year,
         Start_timing:stTime,
         End_Time:edTime,
-        Country:country_name,
+        Country:"Pakistan",
         url:url,
         Time:Date.now()
       });
      
     }    
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [colorTheme,setTheme] = useState();
     const showModal = () => {
       setIsModalOpen(true);
     };
     const handleOk = () => {
       setIsModalOpen(false);
 
-      document.body.style.color = "#000"
-
-
+      let them = useSelector(state =>state.ThemeReducer.theme)
+      setTheme(them)
+      document.body.style.backgroundColor = them
 
 
     };
@@ -136,29 +138,35 @@ useEffect(()=>{
    
      async function uploadImage(image) {
     
-      const storageRef = ref(storage, `images/${image.name}`)
-      uploadBytes(storageRef,image).then(()=>{
-        console.log("Image Uploaded");
-      })
-            getDownloadURL(ref(storage, storageRef))
-        .then((url) => {
+      // const storageRef = ref(storage, `images/${image.name}`)
+      // uploadBytes(storageRef,image).then(()=>{
+      //   console.log("Image Uploaded");
+      // })
+      //   getDownloadURL(ref(storage, storageRef))
+      //   .then((url) => {
         
-            console.log(url);
-            setUrl(url)
+      //       console.log(url);
+      //       setUrl(url)
          
-        })
-        .catch((error) => {
+      //   })
+      //   .catch((error) => {
        
-        });
+      //   });
+
+
+      const storageRef = ref(storage, `images/${image.name}`)
+      const snapshot = await uploadBytes(storageRef, image)
+      const url = await getDownloadURL(snapshot.ref)
+      setUrl(url)
     }
   return (
     <div>
         <Header/>
 
 
-        <div className='container w-[80%] h-[100px] border-2 border-black mt-5 flex justify-around items-center' >
-                <p className='text-[30px] font-black'>Add Your Company</p>
-                <BsFillPlusSquareFill onClick={showModal} className='text-[30px] font-black cursor-pointer'/>
+        <div className='container w-[80%] bg-white h-[100px] border-2 border-black mt-5 flex justify-around items-center' >
+                <p className={`text-[30px] ${ colorTheme === "#000" ? "text-white":"text-black"} font-black`}>Add Your Company</p>
+                <BsFillPlusSquareFill onClick={showModal} className='text-[30px] text-black font-black cursor-pointer'/>
         </div>
 
 
@@ -171,7 +179,7 @@ useEffect(()=>{
 
 
         <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <div className='w-full h-[400px] flex flex-col justify-around items-center'>
+            <div className='w-full h-[400px] bg-white flex flex-col justify-around items-center'>
 
                         <Input onChange={Company_Name} placeholder='Enter Your Company Name' />
                         <Input onChange={Company_year} placeholder='Company Starting Year' />

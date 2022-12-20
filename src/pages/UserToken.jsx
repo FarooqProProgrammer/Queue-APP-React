@@ -236,6 +236,8 @@ function UserToken() {
 
             <div className="image" style={{width:'100%',height:"100%",border:"2px solid black"}}>
               <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+              <Input type="text" placeholder="Enter Your Name "/>
+              <Input type="text" placeholder="Enter Your Name "/>
             </div>
 
             <Button onClick={update}>Add Token</Button>

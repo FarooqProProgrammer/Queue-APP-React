@@ -17,6 +17,10 @@ import moment from 'moment';
 import { Time } from '../../Redux/Action/TimeAction';
 import {MdDarkMode,MdOutlineLightMode} from "react-icons/md"
 import { setTheme } from '../../Redux/Action/ThemeAction';
+import {BsMoonStarsFill,BsFillSunFill} from "react-icons/bs"
+import { box } from './component.styled';
+import { ThemeProvider } from 'styled-components';
+
 
 function Header() {
   // console.log(time);
@@ -44,7 +48,7 @@ function Header() {
 
   const [mode,setMode] = useState(false);
   useEffect(()=>{
-    if (mode == true ){
+    if (mode === true ){
       dispatch(setTheme("#000"))
     }
     else {
@@ -296,13 +300,16 @@ const userAdd = async(id)=>{
           </>
           }
 
-          <p>{  mode === true ? 
-                <MdOutlineLightMode onClick={()=> setMode(false)} size={30} className="mt-3 cursor-pointer ml-2" />
-              :
-                <MdDarkMode size={30} onClick={()=> setMode(true)} className="mt-3 cursor-pointer ml-2" />
-               
-                
-            }</p>
+          <div className='ml-5'>
+        {
+          mode === true ? 
+          <MdOutlineLightMode onClick={()=> setMode(false)} className='text-3xl font-black cursor-pointer'/>:
+          <MdDarkMode onClick={()=> setMode(true)} className='text-3xl font-black cursor-pointer'/>
+          
+        }
+ 
+          
+        </div>
          
 
           

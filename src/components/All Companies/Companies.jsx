@@ -45,10 +45,11 @@ const Companies = () => {
   }
 
   return (
-    <div className='container h-[auto] border-2 border-black'>
+    <div className='container h-[auto] bg-white border-2 border-black'>
           <table class="table">
   <thead>
     <tr>
+      <th scope='col'>Image</th>
       <th scope="col">Company_Name</th>
       <th scope="col">Start_timing</th>
       <th scope="col">End_Time</th>
@@ -61,6 +62,12 @@ const Companies = () => {
 
     return (
             <tr>
+              <td>
+                <div className='w-[40px] h-[40px] border-2 border-black rounded-full'>
+                    <img src={item.url} className='w-full h-full rounded-full' alt="" />
+                
+                </div>
+              </td>
               <td>{item.Company_Name}</td>
               <td>{item.Start_timing}</td>
               <td>{item.End_Time}</td>
