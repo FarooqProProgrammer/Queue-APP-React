@@ -65,47 +65,47 @@ function Header() {
 
 
 
-  const Gb = ()=>{
-    signInWithPopup(auth, provider_gb)
-  .then((result) => {
-    // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-    const credential = GithubAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    //console.log(credential);
-    // The signed-in user info.
-    const user = result.user;
-    // //console.log(user);
+  // const Gb = ()=>{
+  //   signInWithPopup(auth, provider_gb)
+  // .then((result) => {
+  //   // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+  //   const credential = GithubAuthProvider.credentialFromResult(result);
+  //   const token = credential.accessToken;
+  //   //console.log(credential);
+  //   // The signed-in user info.
+  //   const user = result.user;
+  //   // //console.log(user);
    
 
-    const email = user.email
-    const photoUrl = user.photoURL
-    const id = user.uid
+  //   const email = user.email
+  //   const photoUrl = user.photoURL
+  //   const id = user.uid
 
-    const Name = user.reloadUserInfo.screenName
-    setUserName(Name)
-    setUserPhoto(photoUrl)
+  //   const Name = user.reloadUserInfo.screenName
+  //   setUserName(Name)
+  //   setUserPhoto(photoUrl)
 
-    //console.log(email);
-    //console.log(photoUrl);
-    //console.log(id);
-    //console.log(Name);
+  //   //console.log(email);
+  //   //console.log(photoUrl);
+  //   //console.log(id);
+  //   //console.log(Name);
 
-    AddInfo(Name,id,email,photoUrl)
-    setName(true)
+  //   AddInfo(Name,id,email,photoUrl)
+  //   setName(true)
 
   
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GithubAuthProvider.credentialFromError(error);
-    // ...
-  });
-  }
+  //   // ...
+  // }).catch((error) => {
+  //   // Handle Errors here.
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   // The email of the user's account used.
+  //   const email = error.customData.email;
+  //   // The AuthCredential type that was used.
+  //   const credential = GithubAuthProvider.credentialFromError(error);
+  //   // ...
+  // });
+  // }
 
 
 
@@ -156,26 +156,26 @@ function Header() {
   }
 
 
-  const GoogleLogin = ()=>{
-    signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
-  }
+  // const GoogleLogin = ()=>{
+  //   signInWithPopup(auth, provider)
+  // .then((result) => {
+  //   // This gives you a Google Access Token. You can use it to access the Google API.
+  //   const credential = GoogleAuthProvider.credentialFromResult(result);
+  //   const token = credential.accessToken;
+  //   // The signed-in user info.
+  //   const user = result.user;
+  //   // ...
+  // }).catch((error) => {
+  //   // Handle Errors here.
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   // The email of the user's account used.
+  //   const email = error.customData.email;
+  //   // The AuthCredential type that was used.
+  //   const credential = GoogleAuthProvider.credentialFromError(error);
+  //   // ...
+  // });
+  // }
 
   // ======================= Use State ======================================
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -239,6 +239,7 @@ const userAdd = async(id)=>{
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
+      localStorage.setItem("User",JSON.stringify(user))
       //console.log(user);
       success()
     })
@@ -336,7 +337,9 @@ const userAdd = async(id)=>{
         <div className="Login flex flex-col justify-around items-center">
           <Input placeholder='Enter Email' onChange={(e)=>setEmail(e.target.value)} className='w-[200px]' />
           <Input placeholder='Enter Password' onChange={(e)=> setpassword(e.target.value)} className='w-[200px]' />
-          <Button variant="primary" onClick={SignIn}>Login</Button>
+          <Button variant="primary" onClick={SignIn}>
+            Login For Buy A Company Token
+          </Button>
         </div>
       :  
       <div className="SignUp flex flex-col justify-around items-center">
@@ -356,9 +359,11 @@ const userAdd = async(id)=>{
 
 
 
-        <Button className='w-full' onClick={GoogleLogin}>Login With Google</Button>
-        <Button className='w-full' onClick={fb}>Login With Facebook</Button>
-        <Button className='w-full' onClick={Gb}>Login With Github</Button>
+        {/* <Button className='w-full' onClick={GoogleLogin}>Login With Google</Button> */}
+        <Button className='w-full' onClick={fb}>
+          Login With Facebook For Add Company
+        </Button>
+        {/* <Button className='w-full' onClick={Gb}>Login With Github</Button> */}
         
         
         </div>
