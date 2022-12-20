@@ -12,9 +12,11 @@ import {
 } from './TokenConfig'
 import "./styles/index.css"
 import { Input ,Button } from 'antd';
+import { useSelector } from 'react-redux';
 
 function Tokenuser() {
-
+    const theme = useSelector(state=>state.ThemeReducer.theme)
+    document.body.style.backgroundColor = theme
     const db = getFirestore(app)
 
     const [data,setData] = useState([]);

@@ -68,7 +68,7 @@ function Admin() {
     const handleOk = () => {
       setIsModalOpen(false);
 
-
+      document.body.style.color = "#000"
 
 
 

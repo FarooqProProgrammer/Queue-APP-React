@@ -140,7 +140,8 @@ function Tokens() {
       });
 
     }
-
+    const theme = useSelector(state=>state.ThemeReducer.theme)
+    document.body.style.backgroundColor = theme
    
     const [open,setOpen] = useState(false)
     const showModals = () => {

@@ -15,7 +15,8 @@ import { setUserInfo } from '../../Redux/Action/User';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'; 
 import { Time } from '../../Redux/Action/TimeAction';
-
+import {MdDarkMode,MdOutlineLightMode} from "react-icons/md"
+import { setTheme } from '../../Redux/Action/ThemeAction';
 
 function Header() {
   // console.log(time);
@@ -41,21 +42,22 @@ function Header() {
 
 
 
+  const [mode,setMode] = useState(false);
+  useEffect(()=>{
+    if (mode == true ){
+      dispatch(setTheme("#000"))
+    }
+    else {
+      dispatch(setTheme("#fff"))
+    }
+  })
 
-  // =================== Account Info ===========================
 
-  // async function getInfo(name){
-  //   const docRef = doc(db, "Users", name);
-  //   const docSnap = await getDoc(docRef);
-    
-  //   if (docSnap.exists()) {
-  //     //console.log("Document data:", docSnap.data());
-  //   } else {
-  //     // doc.data() will be undefined in this case
-  //     //console.log("No such document!");
-  //   }
-  // }
-
+  const theme = useSelector(state=>state.ThemeReducer.theme)
+  document.body.style.backgroundColor = theme
+  document.body.style.color = "#fff"
+  
+  
 
 
 
@@ -294,7 +296,13 @@ const userAdd = async(id)=>{
           </>
           }
 
-          <p></p>
+          <p>{  mode === true ? 
+                <MdOutlineLightMode onClick={()=> setMode(false)} size={30} className="mt-3 cursor-pointer ml-2" />
+              :
+                <MdDarkMode size={30} onClick={()=> setMode(true)} className="mt-3 cursor-pointer ml-2" />
+               
+                
+            }</p>
          
 
           
