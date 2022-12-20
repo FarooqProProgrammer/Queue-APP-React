@@ -1,6 +1,6 @@
 function setUserInfo(user) {
 
-    console.log('user inside setTheme action', user)
+    //console.log('user inside setTheme action', user)
 
     return {
 

@@ -1,4 +1,5 @@
 import { Footer } from './HomeConfig';
+import LoadingScreen from 'react-loading-screen';
 import {
     getFirestore,
     useState,
@@ -18,7 +19,7 @@ function Tokenuser() {
 
     const [data,setData] = useState([]);
     const [searchTerm,setSearchTerm] = useState("")
-
+    const [loading,setLoading] = useState(true)
     const results = async() =>{
         const q = query(collection(db, "Company"));
         const data = []
@@ -26,22 +27,43 @@ function Tokenuser() {
         querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         data.push({id:doc.id,... doc.data()})
-        console.log({id:doc.id,... doc.data()});
+        //console.log({id:doc.id,... doc.data()});
         setData(data)
         });
     }
 
 
     useEffect(()=>{
+        setTimeout(()=>{
+            setLoading(false)
+        },2000)
+
         results()
     },[])
 
 
   return (
     <div>
-        <Header/>
+       
+
+     
+  
+  {
+    loading === true ?
 
 
+<LoadingScreen
+loading={true}
+bgColor='#f1f1f1'
+spinnerColor='#9ee5f8'
+textColor='#676767'
+text='Please wait us '
+> 
+
+</LoadingScreen>
+:
+<>
+    <Header/>
         <div className="container-fluid h-[auto]  border-2 border-black flex flex-col justify-around items-center">
 
 
@@ -89,7 +111,8 @@ function Tokenuser() {
 
 
                 <Footer/>
-
+                </>
+}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 export default function reducer(state = {}, action) {
 
-    console.log('user inside reducer', action.data)
+    //console.log('user inside reducer', action.data)
 
     switch (action.type) {
 

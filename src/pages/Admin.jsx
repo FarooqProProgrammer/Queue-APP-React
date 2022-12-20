@@ -15,7 +15,7 @@ function Admin() {
     const auth = getAuth(app)
 
     const user = auth.currentUser;
-    console.log(user);
+    //console.log(user);
 
 // ===================================================================================================
     const [company_name,setCompanyName] = useState();
@@ -28,7 +28,7 @@ function Admin() {
 
     const Company_Name = (e)=>{
         setCompanyName(e.target.value)
-        console.log(e.target.value);
+        //console.log(e.target.value);
     }
     const Company_year = (e)=>{
         setCompanyYear(e.target.value)
@@ -64,9 +64,9 @@ function Admin() {
 
 useEffect(()=>{
       
-      // console.log(Country.getAllCountries())
+      // //console.log(Country.getAllCountries())
       setCountry(Country.getAllCountries())
-      console.log(State.getAllStates())
+      //console.log(State.getAllStates())
     },[])
 
 
@@ -94,15 +94,15 @@ useEffect(()=>{
         let flag = false
         for(let i =0;i<country.length;i++){
             if(country[i].name === value){
-              // console.log(i);
-                console.log(country[i].name);
+              // //console.log(i);
+                //console.log(country[i].name);
                 success(country[i].name)
             }
             flag = true
         }
 
 
-      console.log("Search");
+      //console.log("Search");
     }
 
 
@@ -116,10 +116,10 @@ useEffect(()=>{
     uploadImage(img)
  
      async function uploadImage(image) {
-      console.log(image.name);
+      //console.log(image.name);
       const storageRef = ref(storage, `images/${image.name}`)
       uploadBytes(storageRef,image).then(()=>{
-        console.log("Image Uploaded");
+        //console.log("Image Uploaded");
       })
     }
   return (

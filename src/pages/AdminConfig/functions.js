@@ -18,7 +18,7 @@ const SubmitInfo =async (user,company_name,company_year,stTime,edTime,country_na
       Country:country_name,
       Time:Date.now()
     });
-    console.log("Document written with ID: ", docRef.id);
+    //console.log("Document written with ID: ", docRef.id);
   }
 
 

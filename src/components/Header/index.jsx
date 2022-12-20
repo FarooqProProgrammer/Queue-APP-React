@@ -20,7 +20,7 @@ function Header() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.Userreducer.user)
 
-  console.log("Pakistan");
+  //console.log("Pakistan");
   const [name,setName] = useState(false)
 
   const [user_name,setUserName] = useState()
@@ -46,10 +46,10 @@ function Header() {
   //   const docSnap = await getDoc(docRef);
     
   //   if (docSnap.exists()) {
-  //     console.log("Document data:", docSnap.data());
+  //     //console.log("Document data:", docSnap.data());
   //   } else {
   //     // doc.data() will be undefined in this case
-  //     console.log("No such document!");
+  //     //console.log("No such document!");
   //   }
   // }
 
@@ -62,10 +62,10 @@ function Header() {
     // This gives you a GitHub Access Token. You can use it to access the GitHub API.
     const credential = GithubAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
-    console.log(credential);
+    //console.log(credential);
     // The signed-in user info.
     const user = result.user;
-    // console.log(user);
+    // //console.log(user);
    
 
     const email = user.email
@@ -76,10 +76,10 @@ function Header() {
     setUserName(Name)
     setUserPhoto(photoUrl)
 
-    console.log(email);
-    console.log(photoUrl);
-    console.log(id);
-    console.log(Name);
+    //console.log(email);
+    //console.log(photoUrl);
+    //console.log(id);
+    //console.log(Name);
 
     AddInfo(Name,id,email,photoUrl)
     setName(true)
@@ -118,7 +118,7 @@ function Header() {
     .then((result) => {
       // The signed-in user info.
       const user = result.user;
-      console.log(user);
+      //console.log(user);
       const userInfo = {
         Name:user.displayName,
         photo:user.photoURL
@@ -190,9 +190,9 @@ function Header() {
    
 
   function AddUser(){
-    console.log(email);
-    console.log(password);
-    console.log(User);
+    //console.log(email);
+    //console.log(password);
+    //console.log(User);
 
     createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
@@ -204,7 +204,7 @@ function Header() {
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log(errorMessage);
+    //console.log(errorMessage);
     // ..
   });
 
@@ -224,13 +224,13 @@ const userAdd = async(id)=>{
   }
 
   const SignIn = ()=>{
-    console.log(email);
-    console.log(password);
+    //console.log(email);
+    //console.log(password);
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
-      console.log(user);
+      //console.log(user);
       success()
     })
     .catch((error) => {

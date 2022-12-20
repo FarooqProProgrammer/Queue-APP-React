@@ -1,4 +1,6 @@
 import { Footer } from "./HomeConfig";
+import { FileUploader } from "react-drag-drop-files";
+import {getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {
   Modal ,
   doc ,
@@ -20,6 +22,18 @@ import {
 
 function Tokens() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const storage = getStorage(app)
+
+
+  const fileTypes = ["JPG", "PNG", "GIF"];
+
+
+  const [file, setFile] = useState(null);
+  const handleChange = (file) => {
+    setFile(file);
+
+  } 
+  //console.log(file);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -30,6 +44,8 @@ function Tokens() {
     setIsModalOpen(false);
   };
 
+  
+
 
 
 
@@ -37,7 +53,7 @@ function Tokens() {
     const [single,setSingle] = useState([]);
 
     const {id} = useParams();
-    console.log(id);
+    // //console.log(id);
 
 
     useEffect(()=>{
@@ -49,12 +65,12 @@ function Tokens() {
         const docSnap = await getDoc(docRef);
         const d = []
         if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        // //console.log("Document data:", docSnap.data());
         d.push(docSnap.data())
         setSingle(d)
         } else {
         // doc.data() will be undefined in this case
-        console.log("No such document!");
+        // //console.log("No such document!");
         }
     }
 
@@ -67,13 +83,20 @@ function Tokens() {
 
 
     //  ======================= Add Token Info ==============================
-    
+    async function uploadImage(file) {
+      const storageRef = ref(storage, `images/${file.name}`)
+      const snapshot = await uploadBytes(storageRef, file)
+      const url = await getDownloadURL(snapshot.ref)
+      return url
+    }
    async function AddToken(){
+   
       const docRef = await setDoc(doc(db, `/Company/${id}/Tokens`, `Tokens${id}`), {
         TotalTokens: Total,
         start_token: (Start)
+        
       });
-      console.log("Document written with ID: ", docRef.id);  
+      //console.log("Document written with ID: ", docRef.id);  
     }
 
 
@@ -89,11 +112,10 @@ function Tokens() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log(docSnap.data());
+        // //console.log(docSnap.data());
         setToken(docSnap.data())
       } else {
         
-        console.log("No such document!");
       }
 
 
@@ -106,9 +128,10 @@ function Tokens() {
     const [updateToken,setupdate] = useState(tokess.TotalTokens)
     const update = async() =>{
       
-      console.log(tokess.TotalTokens);
       
-
+   let url = uploadImage(file)
+      
+    console.log(url);
 
       if(tokess.start_token === tokess.TotalTokens){}
     
@@ -133,19 +156,17 @@ function Tokens() {
 
     }
 
+   
+
+
+     
+
+
+
 
   return (
     <div>
       <Header/>
-
-
-
-        <div className="container-fluid w-[80%] h-[70px] border-2 border-black flex justify-around items-center">
-                <p className='text-2xl font-black'>Generate Tokens For Today</p>
-                <Button onClick={showModal} className='btn btn-primary'>Generate Token</Button>
-                <Button onClick={Reset}>Reset</Button>
-        </div>
-
 
 
 
@@ -180,8 +201,8 @@ function Tokens() {
 
     
     <div class="w-[250px]  h-[150px] ">
-    <Button className="w-full bt btn btn-primary " onClick={tokess.TotalTokens != tokess.start_token ?update:""}>Update Token</Button>
-         <p className='text-4xl font-black text-center'>{tokess.TotalTokens != tokess.start_token ? tokess.TotalTokens :"Token is full"}</p>
+    <Button className="w-full bt btn btn-primary " onClick={tokess.TotalTokens !== tokess.start_token ?showModal:""}>Update Token</Button>
+         <p className='text-4xl font-black text-center'>{tokess.TotalTokens !== tokess.start_token ? tokess.TotalTokens :"Token is full"}</p>
     </div>
 
 
@@ -194,9 +215,13 @@ function Tokens() {
 
       <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
        <div className='w-[100%] h-[300px] border-2 border-black flex flex-col justify-around items-center'>
-            <Input className='w-[80%]' onChange={(e)=> setTotal(e.target.value)} placeholder='Enter Daily Token Start Limit'/>
-            <Input className='w-[80%]' onChange={(e)=> setStart(e.target.value)}  placeholder='Enter Daily Token Limit'/>
-            <Button onClick={AddToken}>Generate</Button>
+            {/* <Input type="file" onChange={(e)=> setImagePatient(e.target.files[0].name)} placeholder="Upload Image"/> */}
+
+            <div className="image" style={{width:'100%',height:"100%",border:"2px solid black"}}>
+              <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+            </div>
+
+            <Button onClick={update}>Add Token</Button>
       </div>
 
       </Modal>
