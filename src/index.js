@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home'
-
+import { PersistGate } from 'redux-persist/integration/react'
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle"
 
@@ -16,7 +16,7 @@ import Admin from './pages/Admin';
 import Tokens from './pages/Tokens';
 import Tokensuser from './pages/Tokensuser';
 import { Provider } from 'react-redux';
-import { store } from './Redux/Store';
+import { store,persistor } from './Redux/Store';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +38,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-        <RouterProvider router={router} />
+         <PersistGate loading={null} persistor={persistor}>
+            <RouterProvider router={router} />
+        </PersistGate>
 
   </Provider>
 );

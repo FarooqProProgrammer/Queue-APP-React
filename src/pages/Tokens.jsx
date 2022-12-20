@@ -1,12 +1,22 @@
-import { doc, getDoc, getFirestore, startAfter,collection,addDoc,setDoc,updateDoc} from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap';
-import { useParams ,Link } from 'react-router-dom'
-import Header from '../components/Header'
-import app from '../config/Firebase';
-import {  Modal ,Input} from 'antd';
-
-
+import { Footer } from "./HomeConfig";
+import {
+  Modal ,
+  doc ,
+  updateDoc,
+  useEffect ,
+  useState ,
+  getDoc ,
+  getFirestore ,
+  collection ,
+  addDoc ,
+  setDoc ,
+  Input ,
+  app ,
+  useParams ,
+  Link ,
+  Header ,
+  Button 
+} from "./TokenConfig"
 
 function Tokens() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -190,6 +200,8 @@ function Tokens() {
       </div>
 
       </Modal>
+
+      <Footer/>
     </div>
   )
 }

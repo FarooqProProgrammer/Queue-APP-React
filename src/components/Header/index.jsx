@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Header() {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.Userreducer.user)
 
   console.log("Pakistan");
   const [name,setName] = useState(false)

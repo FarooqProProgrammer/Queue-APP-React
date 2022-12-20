@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import Header from '../components/Header'
-import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
-import app from '../config/Firebase'
-import { Link } from 'react-router-dom'
-
+import { Footer } from './HomeConfig';
+import {
+    getFirestore,
+    useState,
+    query ,
+    collection,
+    getDocs,
+    app,useEffect,
+    Header,
+    Link
+} from './TokenConfig'
+import "./styles/index.css"
+import { Input ,Button } from 'antd';
 
 function Tokenuser() {
 
@@ -38,23 +44,43 @@ function Tokenuser() {
         <div className="container-fluid h-[auto]  border-2 border-black flex flex-col justify-around items-center">
 
 
-            {   data.map((item)=>{
+            <div className="Search">
+                    <Input placeholder="Basic usage" />
+                    <Button>Search</Button>
+            </div>
+
+                <div className="tableUser">
+                                            <table class="table">
+                            <thead>
+                                <tr>
+                       
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                  {   data.map((item)=>{
                 return (
-                    <div className="companies mt-10 w-[90%] h-[80px] border-2 border-black flex justify-around items-center">
-                            <p className='text-2xl font-black '>{item.Company_Name}</p>
-                            <p className='text-2xl font-black '>{item.Country}</p>
-                            <Link to={`/Token/${item.id}`} className="btn btn-secondary">View</Link>
-                    </div>
+                    <tr>
+                           <td> <p className='text-2xl font-black '>{item.Company_Name}</p></td>
+                            <td><p className='text-2xl font-black '>{item.Country}</p></td>
+                            <td><Link to={`/Token/${item.id}`} className="btn btn-secondary">View</Link></td>
+                    </tr>
     
                 )
             })
                 
             }
+                            </tbody>
+                            </table>
+
+                </div>
 
         </div>
 
 
-
+                <Footer/>
 
     </div>
   )

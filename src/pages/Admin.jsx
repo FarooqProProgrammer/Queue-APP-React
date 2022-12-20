@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react'
-import Header from '../components/Header'
-import {BsFillPlusSquareFill} from 'react-icons/bs'
-import { Button,Input, Modal ,Space} from 'antd';
-import { useState } from 'react';
 
-import app from '../config/Firebase';
-import { collection, addDoc, getFirestore } from "firebase/firestore";
-import { getStorage, ref ,uploadBytes,getDownloadURL,uploadBytesResumable } from "firebase/storage";
-import Companies from '../components/All Companies/Companies';
-import { Country, State, City }  from 'country-state-city';
-import { AudioOutlined } from '@ant-design/icons';
-import { getAuth } from 'firebase/auth';
+import { 
+  Header,BsFillPlusSquareFill,Button,Input,Modal,Space
+  ,useState,app,collection,addDoc,getFirestore,getStorage,ref,uploadBytes,
+  uploadBytesResumable,getDownloadURL,Companies,Country,State,City,
+  AudioOutlined,getAuth
+ } from './AdminConfig'
+ import {SubmitInfo} from "./AdminConfig/functions"
+import { Footer } from './HomeConfig'
 function Admin() {
 
     const storage = getStorage(app)
@@ -25,6 +22,9 @@ function Admin() {
     const [company_year,setCompanyYear] = useState();
     const [stTime,setTiming] = useState()
     const [edTime,setEndTime] = useState()
+    const [img,setImage] = useState(null);
+    const [url,setUrl] = useState();
+    const [country,setCountry] = useState([])    
 
     const Company_Name = (e)=>{
         setCompanyName(e.target.value)
@@ -39,32 +39,8 @@ function Admin() {
     const End_Time = (e)=>{
         setEndTime(e.target.value)
     }
-
-
-    const SubmitInfo =async ()=>{
-      // console.log(company_name);
-      // console.log(company_year);
-      // console.log(stTime);
-      // console.log(edTime);
-
-      //  let url = uploadImage(img)
-      
-      // console.log(url);
-
-
-      const docRef = await addDoc(collection(db, "Company"), {
-        user:user.uid,
-        Company_Name: company_name,
-        StartingYear:company_year,
-        Start_timing:stTime,
-        End_Time:edTime,
-        Country:country_name,
-        Time:Date.now()
-      });
-      console.log("Document written with ID: ", docRef.id);
-    }
-
-
+    const [country_name,setCountryName] = useState()
+    SubmitInfo (user,company_name,company_year,stTime,edTime,country_name)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
       setIsModalOpen(true);
@@ -85,7 +61,7 @@ function Admin() {
 // =====================================================================================================
 
 // ========================================================================================================
-  const [country,setCountry] = useState([])    
+
 useEffect(()=>{
       
       // console.log(Country.getAllCountries())
@@ -103,6 +79,8 @@ useEffect(()=>{
         }}
       />
     );
+
+    // success(country)
     const success = (country) => {
       Modal.success({
         content: `${country} is Founded Successfully`,
@@ -110,7 +88,7 @@ useEffect(()=>{
     };
 
 
-    const [country_name,setCountryName] = useState()
+  
     const onSearch = (value)=>{
       setCountryName(value)
         let flag = false
@@ -127,8 +105,7 @@ useEffect(()=>{
       console.log("Search");
     }
 
-    const [img,setImage] = useState(null);
-    const [url,setUrl] = useState();
+
 
     const handleChange = (event)=>{
         setImage(event.target.files[0])
@@ -188,6 +165,11 @@ useEffect(()=>{
 
             </div>
         </Modal>
+        <div className="" style={{marginTop:"100px"}} >
+          
+        <Footer/>
+
+        </div>
     </div>
   )
 }
