@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import './index.css'
 
 import Container from 'react-bootstrap/Container';
@@ -13,10 +13,13 @@ import { doc, getFirestore, setDoc} from "firebase/firestore";
 import { async } from '@firebase/util';
 import { setUserInfo } from '../../Redux/Action/User';
 import { useDispatch, useSelector } from 'react-redux';
-
+import moment from 'moment'; 
+import { Time } from '../../Redux/Action/TimeAction';
 
 
 function Header() {
+  // console.log(time);
+ 
   const dispatch = useDispatch();
   const user = useSelector(state => state.Userreducer.user)
 
@@ -256,6 +259,18 @@ const userAdd = async(id)=>{
   };
 
 
+  const [time,setTime] = useState()
+
+  setTimeout(()=>{
+    setTime(moment().format('LTS'))
+  },1000)
+
+  useEffect(()=>{
+    dispatch(Time(time))
+  },[time])
+  
+  
+
   return (
     <>
     <Navbar  expand="lg" className='bg-[#3498db]'>
@@ -264,8 +279,8 @@ const userAdd = async(id)=>{
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav " className=''>
           <Nav className="me-auto ">
-            <Nav.Link href="#home" className='text-[20px] font-black text-white'>Home</Nav.Link>
-            <Nav.Link href="#link" className='text-[20px] font-black text-white'>Link</Nav.Link>
+            <Nav.Link href="#home" className='text-[20px] font-black text-white'>{time}</Nav.Link>
+            <Nav.Link href="#link" className='text-[20px] font-black text-white'></Nav.Link>
            
           </Nav>
          {
@@ -278,6 +293,9 @@ const userAdd = async(id)=>{
           <p><span>{user.Name}</span></p>
           </>
           }
+
+          <p></p>
+         
 
           
         </Navbar.Collapse>

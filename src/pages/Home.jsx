@@ -1,11 +1,18 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import { Header } from './AdminConfig'
 import { HeroBox,Footer } from './HomeConfig'
+import moment from "moment"
+
+console.log(moment().format('LTS'))
+
 
 function Home() {
+
+ 
+  
   return (
     <div>
-        <Header/>
+        <Header />
         <HeroBox/>
         <Footer/>
     </div>

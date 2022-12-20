@@ -19,9 +19,17 @@ import {
   Header ,
   Button 
 } from "./TokenConfig"
+import { useSelector } from "react-redux";
 
 
 function Tokens() {
+  const time = useSelector(state => state.TimeReducer.time)
+  useEffect(()=>{
+    
+    console.log(time);
+  },[])
+ 
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const storage = getStorage(app)
 
@@ -123,30 +131,6 @@ function Tokens() {
     }
 
 
-
-
-    // =====================================================================================
-    const [updateToken,setupdate] = useState(tokess.TotalTokens)
-    const update = async() =>{
-      
-      
-   let url = uploadImage(file)
-      
-    console.log(url);
-
-      if(tokess.start_token === tokess.TotalTokens){}
-    
-      const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
-
-      // Set the "capital" field of the city 'DC'
-      await updateDoc(washingtonRef, {
-        TotalTokens:tokess.TotalTokens != tokess.start_token ? Number(tokess.TotalTokens) + 1 :"Token is full"
-      });
-
-
-    }
-
-
     const Reset = async()=>{
       const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
 
@@ -222,7 +206,7 @@ function Tokens() {
 
     
     <div class="w-[250px]  h-[150px] ">
-    <Button className="w-full bt btn btn-primary " onClick={tokess.TotalTokens !== tokess.start_token ?showModal:""}>Update Token</Button>
+    {/* <Button className="w-full bt btn btn-primary ">Update Token</Button> */}
          <p className='text-4xl font-black text-center'>{tokess.TotalTokens !== tokess.start_token ? tokess.TotalTokens :"Token is full"}</p>
     </div>
 
@@ -234,9 +218,9 @@ function Tokens() {
 
 
 
-      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      {/* <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
        <div className='w-[100%] h-[300px] border-2 border-black flex flex-col justify-around items-center'>
-            {/* <Input type="file" onChange={(e)=> setImagePatient(e.target.files[0].name)} placeholder="Upload Image"/> */}
+            <Input type="file" onChange={(e)=> setImagePatient(e.target.files[0].name)} placeholder="Upload Image"/>
 
             <div className="image" style={{width:'100%',height:"100%",border:"2px solid black"}}>
               <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
@@ -245,7 +229,7 @@ function Tokens() {
             <Button onClick={update}>Add Token</Button>
       </div>
 
-      </Modal>
+      </Modal> */}
 
 
 

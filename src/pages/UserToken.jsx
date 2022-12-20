@@ -19,8 +19,17 @@ import {
   Header ,
   Button 
 } from "./TokenConfig"
+import { useSelector } from "react-redux";
 
 function UserToken() {
+
+  const time = useSelector(state => state.TimeReducer.time)
+  useEffect(()=>{
+    
+    console.log(time);
+  },[])
+ 
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const storage = getStorage(app)
 
@@ -133,7 +142,15 @@ function UserToken() {
       
     console.log(url);
 
-      if(tokess.start_token === tokess.TotalTokens){}
+      if(time  === "11:59:00 PM"){
+        const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
+
+        // Set the "capital" field of the city 'DC'
+        await updateDoc(washingtonRef, {
+          TotalTokens:0
+        });
+  
+      }
     
       const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
 

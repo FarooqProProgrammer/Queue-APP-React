@@ -40,7 +40,27 @@ function Admin() {
         setEndTime(e.target.value)
     }
     const [country_name,setCountryName] = useState()
-    SubmitInfo (user,company_name,company_year,stTime,edTime,country_name)
+    const SubmitInfo =async (user,company_name,company_year,stTime,edTime,country_name,url)=>{
+      console.log(user.uid);
+      console.log(company_name);
+      console.log(company_year);
+      console.log(stTime);
+      console.log(edTime);
+      console.log(country_name);
+      console.log(url);
+
+      const docRef = await addDoc(collection(db, "Company"), {
+        user:user.uid,
+        Company_Name: company_name,
+        StartingYear:company_year,
+        Start_timing:stTime,
+        End_Time:edTime,
+        Country:country_name,
+        url:url,
+        Time:Date.now()
+      });
+     
+    }    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
       setIsModalOpen(true);
@@ -113,14 +133,23 @@ useEffect(()=>{
        
     }
 
-    uploadImage(img)
- 
+   
      async function uploadImage(image) {
-      //console.log(image.name);
+    
       const storageRef = ref(storage, `images/${image.name}`)
       uploadBytes(storageRef,image).then(()=>{
-        //console.log("Image Uploaded");
+        console.log("Image Uploaded");
       })
+            getDownloadURL(ref(storage, storageRef))
+        .then((url) => {
+        
+            console.log(url);
+            setUrl(url)
+         
+        })
+        .catch((error) => {
+       
+        });
     }
   return (
     <div>
@@ -146,17 +175,18 @@ useEffect(()=>{
 
                         <Input onChange={Company_Name} placeholder='Enter Your Company Name' />
                         <Input onChange={Company_year} placeholder='Company Starting Year' />
-                        <Input type='file' onChange={(event)=>setImage(event.target.files[0])} />
+                        <Input type='file' onChange={handleChange} />
                         <Input onChange={start_timing} placeholder='Enter Start Timing'/>
                         <Input onChange={End_Time} placeholder='Enter Close Timing'/>
-                        <Search
-      placeholder="input search text"
-      allowClear
-      onSearch={onSearch}
-      style={{
-        width: 200,
-      }}
-    />
+                        <Input type='text' onChange={(e)=> setCountry(e.target.value)}/>
+                        {/* <Search
+                          placeholder="input search text"
+                          allowClear
+                          onSearch={onSearch}
+                          style={{
+                            width: 200,
+                          }}
+                        /> */}
 
                         <Button onClick={
                           SubmitInfo
