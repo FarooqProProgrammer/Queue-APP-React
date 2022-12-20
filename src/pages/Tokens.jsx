@@ -26,7 +26,6 @@ function Tokens() {
   const time = useSelector(state => state.TimeReducer.time)
   useEffect(()=>{
     
-    console.log(time);
   },[])
  
   
@@ -62,7 +61,6 @@ function Tokens() {
     const [single,setSingle] = useState([]);
 
     const {id} = useParams();
-    // //console.log(id);
 
 
     useEffect(()=>{
@@ -74,12 +72,10 @@ function Tokens() {
         const docSnap = await getDoc(docRef);
         const d = []
         if (docSnap.exists()) {
-        // //console.log("Document data:", docSnap.data());
         d.push(docSnap.data())
         setSingle(d)
         } else {
         // doc.data() will be undefined in this case
-        // //console.log("No such document!");
         }
     }
 
@@ -105,7 +101,6 @@ function Tokens() {
         start_token: Total
         
       });
-      //console.log("Document written with ID: ", docRef.id);  
     }
 
 
@@ -121,7 +116,6 @@ function Tokens() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        // //console.log(docSnap.data());
         setToken(docSnap.data())
       } else {
         

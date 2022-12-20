@@ -27,9 +27,7 @@ function Tokenuser() {
         const data = []
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
         data.push({id:doc.id,... doc.data()})
-        //console.log({id:doc.id,... doc.data()});
         setData(data)
         });
     }

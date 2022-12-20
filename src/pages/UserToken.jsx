@@ -26,7 +26,6 @@ function UserToken() {
   const time = useSelector(state => state.TimeReducer.time)
   useEffect(()=>{
     
-    console.log(time);
   },[])
  
 
@@ -39,11 +38,9 @@ function UserToken() {
 
   const [file, setFile] = useState(null);
   const handleChange = (file) => {
-    console.log(file)
     setFile(file);
 
   } 
-  //console.log(file);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -66,13 +63,11 @@ function UserToken() {
     
     const [url,setUrl] = useState();
       async function addToken(Name,email){
-        console.log(url);
         const docRef = await addDoc(collection(db, `/Company/${id}/Tokens/${tokenId}/TokenBuyer`), {
           name: Name,
           Email: email,
           Image:url
         });
-        console.log("Document written with ID: ", docRef.id);
       }
 
 
@@ -85,12 +80,10 @@ function UserToken() {
         const docSnap = await getDoc(docRef);
         const d = []
         if (docSnap.exists()) {
-        // //console.log("Document data:", docSnap.data());
         d.push(docSnap.data())
         setSingle(d)
         } else {
         // doc.data() will be undefined in this case
-        // //console.log("No such document!");
         }
     }
 
@@ -104,7 +97,6 @@ function UserToken() {
       const storageRef = ref(storage, `Token/${image.name}`)
       const snapshot = await uploadBytes(storageRef, image)
       const url = await getDownloadURL(snapshot.ref)
-      console.log(url)
       setUrl(url)
     }
   
@@ -122,9 +114,7 @@ function UserToken() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        // //console.log(docSnap.data());
         setTokenId(docSnap.id)
-        // console.log({id:docSnap.id , ...docSnap.data()});
         setToken(docSnap.data())
       } else {
         
