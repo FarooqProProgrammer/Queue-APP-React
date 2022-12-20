@@ -22,7 +22,7 @@ import {
 import { useSelector } from "react-redux";
 
 function UserToken() {
-
+  const [tokenId,setTokenId] = useState()
   const time = useSelector(state => state.TimeReducer.time)
   useEffect(()=>{
     
@@ -39,6 +39,7 @@ function UserToken() {
 
   const [file, setFile] = useState(null);
   const handleChange = (file) => {
+    console.log(file)
     setFile(file);
 
   } 
@@ -62,7 +63,17 @@ function UserToken() {
     const [single,setSingle] = useState([]);
 
     const {id} = useParams();
-    // //console.log(id);
+    
+    const [url,setUrl] = useState();
+      async function addToken(Name,email){
+        console.log(url);
+        const docRef = await addDoc(collection(db, `/Company/${id}/Tokens/${tokenId}/TokenBuyer`), {
+          name: Name,
+          Email: email,
+          Image:url
+        });
+        console.log("Document written with ID: ", docRef.id);
+      }
 
 
     useEffect(()=>{
@@ -85,28 +96,18 @@ function UserToken() {
 
 
 
-    const [Total,setTotal] = useState();
-    const [Start,setStart] = useState()
 
-
-
-
+ 
     //  ======================= Add Token Info ==============================
-    async function uploadImage(file) {
-      const storageRef = ref(storage, `images/${file.name}`)
-      const snapshot = await uploadBytes(storageRef, file)
+    async function uploadImage(image) {
+
+      const storageRef = ref(storage, `Token/${image.name}`)
+      const snapshot = await uploadBytes(storageRef, image)
       const url = await getDownloadURL(snapshot.ref)
-      return url
+      console.log(url)
+      setUrl(url)
     }
-   async function AddToken(){
-   
-      const docRef = await setDoc(doc(db, `/Company/${id}/Tokens`, `Tokens${id}`), {
-        TotalTokens: Total,
-        start_token: (Start)
-        
-      });
-      //console.log("Document written with ID: ", docRef.id);  
-    }
+  
 
 
     useEffect(()=> {
@@ -122,6 +123,8 @@ function UserToken() {
 
       if (docSnap.exists()) {
         // //console.log(docSnap.data());
+        setTokenId(docSnap.id)
+        // console.log({id:docSnap.id , ...docSnap.data()});
         setToken(docSnap.data())
       } else {
         
@@ -135,12 +138,16 @@ function UserToken() {
 
     // =====================================================================================
     const [updateToken,setupdate] = useState(tokess.TotalTokens)
+    const [Name,setName] = useState();
+    const [email,setEmail] = useState()
+     
+
     const update = async() =>{
       
       
-   let url = uploadImage(file)
-      
-    console.log(url);
+    uploadImage(file)
+    addToken(Name,email)      
+   
 
       if(time  === "11:59:00 PM"){
         const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
@@ -175,9 +182,7 @@ function UserToken() {
 
    
 
-
-     
-
+   
 
 
 
@@ -236,8 +241,8 @@ function UserToken() {
 
             <div className="image" style={{width:'100%',height:"100%",border:"2px solid black"}}>
               <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
-              <Input type="text" placeholder="Enter Your Name "/>
-              <Input type="text" placeholder="Enter Your Email "/>
+              <Input type="text" onClick={(e)=>setName(e.target.value)} className="mt-2 mb-2" placeholder="Enter Your Name "/>
+              <Input type="text" onClick={(e)=>setEmail(e.target.value)} className="mt-2 mb-2" placeholder="Enter Your Email "/>
             </div>
 
             <Button onClick={update}>Add Token</Button>

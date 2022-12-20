@@ -54,7 +54,7 @@ function Header() {
     else {
       dispatch(setTheme("#fff"))
     }
-  })
+  },[mode])
 
 
   const theme = useSelector(state=>state.ThemeReducer.theme)
