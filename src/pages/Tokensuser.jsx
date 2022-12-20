@@ -17,6 +17,7 @@ function Tokenuser() {
     const db = getFirestore(app)
 
     const [data,setData] = useState([]);
+    const [searchTerm,setSearchTerm] = useState("")
 
     const results = async() =>{
         const q = query(collection(db, "Company"));
@@ -45,8 +46,8 @@ function Tokenuser() {
 
 
             <div className="Search">
-                    <Input placeholder="Basic usage" />
-                    <Button>Search</Button>
+                    <Input placeholder="Basic usage" onChange={(e)=> setSearchTerm(e.target.value)}/>
+                
             </div>
 
                 <div className="tableUser">
@@ -60,9 +61,16 @@ function Tokenuser() {
                                 </tr>
                             </thead>
                             <tbody>
-                                  {   data.map((item)=>{
+                                  {   data.filter(val=>{
+                                    if (searchTerm === ''){
+                                        return val
+                                    }
+                                    else if (val.Company_Name.toLowerCase().includes(searchTerm.toLowerCase())){
+                                        return val
+                                    }
+                                  }).map((item)=>{
                 return (
-                    <tr>
+                    <tr key={item.id}>
                            <td> <p className='text-2xl font-black '>{item.Company_Name}</p></td>
                             <td><p className='text-2xl font-black '>{item.Country}</p></td>
                             <td><Link to={`/Token/${item.id}`} className="btn btn-secondary">View</Link></td>
