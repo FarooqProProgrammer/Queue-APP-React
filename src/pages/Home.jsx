@@ -11,7 +11,7 @@ function Home() {
 
   const theme = useSelector(state=>state.ThemeReducer.theme)
   document.body.style.backgroundColor = theme
-  
+ 
   return (
     <div>
         <Header />

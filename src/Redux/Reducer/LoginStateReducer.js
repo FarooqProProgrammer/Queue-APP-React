@@ -1,4 +1,4 @@
-export default function reducer(state = {}, action) {
+export default function LoginStateReducer(state = {}, action) {
 
     //console.log('user inside reducer', action.data)
 

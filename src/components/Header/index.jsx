@@ -16,6 +16,7 @@ import moment from 'moment';
 import { Time } from '../../Redux/Action/TimeAction';
 import { setTheme } from '../../Redux/Action/ThemeAction';
 import {FiToggleRight} from "react-icons/fi"
+import { LoginState } from '../../Redux/Action/LoginState';
 
 
 function Header() {
@@ -64,7 +65,7 @@ function Header() {
 
 
 
-  async function   AddInfo(Name,id,email,photoUrl){
+  async function AddInfo(Name,id,email,photoUrl){
     await setDoc(doc(db, "Users", Name), {
       name: Name,
       id: id,
@@ -74,22 +75,27 @@ function Header() {
   }
 
 
-
-
+  const Successfully =()=>{
+   
+      Modal.success({
+        content: 'Login SuccessFully Continue Your Browsing',
+      });
+    
+  }
 
   const fb = ()=>{
     signInWithPopup(auth, provider_fb)
     .then((result) => {
+      Successfully()
       const user = result.user;
       const userInfo = {
         Name:user.displayName,
         photo:user.photoURL
       }
       setName(true)
+      dispatch(LoginState(name))
       dispatch(setUserInfo(userInfo))
       const credential = FacebookAuthProvider.credentialFromResult(result);
-      const accessToken = credential.accessToken;
-      console.log(accessToken) 
     })
     .catch((error) => {
       const errorMessage = error.message;
@@ -186,7 +192,7 @@ const userAdd = async(id)=>{
     dispatch(Time(time))
   },[time])
   
-  
+   
 
   return (
     <>
@@ -200,12 +206,14 @@ const userAdd = async(id)=>{
             <Nav.Link href="#link" className={`text-[20px] font-black ${mode === false ? "text-black":"text-white"}`}></Nav.Link>
            
           </Nav>
+
+
+        
          {
           name === false ? <Button variant="primary" onClick={showModal} className={`text-[20px] font-black ${mode === false ? "text-black":"text-white"}`} >Login</Button>:
           <>
           <div className="image w-[60px] h-[60px]  rounded-full">
             <img className='w-full h-full rounded-full' src={user.photo} alt="" />
-
           </div>
           <p><span>{user.Name}</span></p>
           </>
