@@ -3,6 +3,7 @@ import { collection, query, onSnapshot, getFirestore, where } from "firebase/fir
 import app from '../../config/Firebase';
 import { Link } from 'react-router-dom';
 import { getAuth,onAuthStateChanged } from 'firebase/auth';
+import { useSelector } from 'react-redux';
 
 const Companies = () => {
 
@@ -43,18 +44,18 @@ const Companies = () => {
       //console.log(Companies);
     });
   }
-
+  const Theme = useSelector(state => state.ThemeReducer.theme)
   return (
-    <div className='container h-[auto] bg-white border-2 border-black'>
+    <div className='container h-[auto] bg-white '>
           <table class="table">
   <thead>
     <tr>
-      <th scope='col'>Image</th>
-      <th scope="col">Company_Name</th>
-      <th scope="col">Start_timing</th>
-      <th scope="col">End_Time</th>
-      <th scope='col'>StartingYear</th>
-      <th scope='col'>View</th>
+      <th scope='col' className={`${Theme === "#fff" ? "text-black" :" text-[#fff]"}`}>Image</th>
+      <th scope="col" className={`${Theme === "#fff" ? "text-black" :" text-[#fff]"}`}>Company_Name</th>
+      <th scope="col" className={`${Theme === "#fff" ? "text-black" :" text-[#fff]"}`}>Start_timing</th>
+      <th scope="col" className={`${Theme === "#fff" ? "text-black" :" text-[#fff]"}`}>End_Time</th>
+      <th scope='col' className={`${Theme === "#fff" ? "text-black" :" text-[#fff]"}`}>StartingYear</th>
+      <th scope='col' className={`${Theme === "#fff" ? "text-black" :" text-[#fff]"}`}>View</th>
     </tr>
   </thead>
   <tbody>
@@ -63,7 +64,7 @@ const Companies = () => {
     return (
             <tr>
               <td>
-                <div className='w-[40px] h-[40px] border-2 border-black rounded-full'>
+                <div className='w-[40px] h-[40px]  rounded-full'>
                     <img src={item.url} className='w-full h-full rounded-full' alt="" />
                 
                 </div>

@@ -164,7 +164,7 @@ useEffect(()=>{
         <Header/>
 
 
-        <div className='container w-[80%] bg-white h-[100px] border-2 border-black mt-5 flex justify-around items-center' >
+        <div className='container w-[80%] bg-white h-[100px]  mt-5 flex justify-around items-center' >
                 <p className={`text-[30px] ${ colorTheme === "#000" ? "text-white":"text-black"} font-black`}>Add Your Company</p>
                 <BsFillPlusSquareFill onClick={showModal} className='text-[30px] text-black font-black cursor-pointer'/>
         </div>

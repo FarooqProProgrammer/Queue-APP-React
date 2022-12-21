@@ -172,7 +172,7 @@ function Tokens() {
 
 
 
-      <div className="cards relative w-full h-[500px] border-2 border-black grid grid-rows-1 grid-cols-2 place-items-center">
+      <div className="cards relative w-full h-[500px]  grid grid-rows-1 grid-cols-2 place-items-center">
 
 
       <div class="card" style={{width:"18rem"}}>
@@ -214,7 +214,7 @@ function Tokens() {
 
 
       {/* <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-       <div className='w-[100%] h-[300px] border-2 border-black flex flex-col justify-around items-center'>
+       <div className='w-[100%] h-[300px]  flex flex-col justify-around items-center'>
             <Input type="file" onChange={(e)=> setImagePatient(e.target.files[0].name)} placeholder="Upload Image"/>
 
             <div className="image" style={{width:'100%',height:"100%",border:"2px solid black"}}>
@@ -234,7 +234,7 @@ function Tokens() {
 
 
       <Modal title="Basic Modal" open={open} onOk={handleOks} onCancel={handleCancels}>
-        <div className="inoput w-full h-[300px] border-2 border-black flex flex-col justify-around items-center">
+        <div className="inoput w-full h-[300px]  flex flex-col justify-around items-center">
         <Input type="text" onChange={(e)=> setTotal(e.target.value)} placeholder="Enter Item"/>
         <Input type="text" onChange={(e)=> setStart(e.target.value)} placeholder="Enter Item"/>
            

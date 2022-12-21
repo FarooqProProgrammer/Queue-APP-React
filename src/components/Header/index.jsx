@@ -10,16 +10,12 @@ import { GoogleAuthProvider,getAuth ,signInWithPopup,signInWithEmailAndPassword}
 import {  FacebookAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
 import app from '../../config/Firebase';
 import { doc, getFirestore, setDoc} from "firebase/firestore"; 
-import { async } from '@firebase/util';
 import { setUserInfo } from '../../Redux/Action/User';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'; 
 import { Time } from '../../Redux/Action/TimeAction';
-import {MdDarkMode,MdOutlineLightMode} from "react-icons/md"
 import { setTheme } from '../../Redux/Action/ThemeAction';
-import {BsMoonStarsFill,BsFillSunFill} from "react-icons/bs"
-import { box } from './component.styled';
-import { ThemeProvider } from 'styled-components';
+import {FiToggleRight} from "react-icons/fi"
 
 
 function Header() {
@@ -31,30 +27,31 @@ function Header() {
   //console.log("Pakistan");
   const [name,setName] = useState(false)
 
-  const [user_name,setUserName] = useState()
-  const [user_Photo,setUserPhoto] = useState()
 
   const [popup,setPopup] = useState(false)
   
 
   const auth  = getAuth(app)
   const db = getFirestore(app)
-  const provider = new GoogleAuthProvider();
   const provider_fb = new FacebookAuthProvider();
-  const provider_gb = new GithubAuthProvider();
-  provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
 
 
   const [mode,setMode] = useState(false);
+
+  const ToggleTheme = ()=>{
+      if(mode === false) {
+        setMode(true)
+        dispatch(setTheme("#000"))
+      }else{
+        setMode(false)
+        dispatch(setTheme("#fff"))
+      }
+  }
   useEffect(()=>{
-    if (mode === true ){
-      dispatch(setTheme("#000"))
-    }
-    else {
-      dispatch(setTheme("#fff"))
-    }
-  },[mode])
+
+      
+  },[])
 
 
   const theme = useSelector(state=>state.ThemeReducer.theme)
@@ -64,48 +61,6 @@ function Header() {
   
 
 
-
-  // const Gb = ()=>{
-  //   signInWithPopup(auth, provider_gb)
-  // .then((result) => {
-  //   // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-  //   const credential = GithubAuthProvider.credentialFromResult(result);
-  //   const token = credential.accessToken;
-  //   //console.log(credential);
-  //   // The signed-in user info.
-  //   const user = result.user;
-  //   // //console.log(user);
-   
-
-  //   const email = user.email
-  //   const photoUrl = user.photoURL
-  //   const id = user.uid
-
-  //   const Name = user.reloadUserInfo.screenName
-  //   setUserName(Name)
-  //   setUserPhoto(photoUrl)
-
-  //   //console.log(email);
-  //   //console.log(photoUrl);
-  //   //console.log(id);
-  //   //console.log(Name);
-
-  //   AddInfo(Name,id,email,photoUrl)
-  //   setName(true)
-
-  
-  //   // ...
-  // }).catch((error) => {
-  //   // Handle Errors here.
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  //   // The email of the user's account used.
-  //   const email = error.customData.email;
-  //   // The AuthCredential type that was used.
-  //   const credential = GithubAuthProvider.credentialFromError(error);
-  //   // ...
-  // });
-  // }
 
 
 
@@ -125,57 +80,22 @@ function Header() {
   const fb = ()=>{
     signInWithPopup(auth, provider_fb)
     .then((result) => {
-      // The signed-in user info.
       const user = result.user;
-      //console.log(user);
       const userInfo = {
         Name:user.displayName,
         photo:user.photoURL
       }
-
       setName(true)
       dispatch(setUserInfo(userInfo))
-  
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       const credential = FacebookAuthProvider.credentialFromResult(result);
       const accessToken = credential.accessToken;
-  
-      // ...
+      console.log(accessToken) 
     })
     .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = FacebookAuthProvider.credentialFromError(error);
-  
-      // ...
+      console.log(errorMessage);      
     });
   }
-
-
-  // const GoogleLogin = ()=>{
-  //   signInWithPopup(auth, provider)
-  // .then((result) => {
-  //   // This gives you a Google Access Token. You can use it to access the Google API.
-  //   const credential = GoogleAuthProvider.credentialFromResult(result);
-  //   const token = credential.accessToken;
-  //   // The signed-in user info.
-  //   const user = result.user;
-  //   // ...
-  // }).catch((error) => {
-  //   // Handle Errors here.
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  //   // The email of the user's account used.
-  //   const email = error.customData.email;
-  //   // The AuthCredential type that was used.
-  //   const credential = GoogleAuthProvider.credentialFromError(error);
-  //   // ...
-  // });
-  // }
 
   // ======================= Use State ======================================
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -199,30 +119,23 @@ function Header() {
    
 
   function AddUser(){
-    //console.log(email);
-    //console.log(password);
-    //console.log(User);
-
     createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
-    // Signed in 
+  
     const user = userCredential.user;
     userAdd(user.uid)
-    // ...
+   
   })
   .catch((error) => {
-    const errorCode = error.code;
     const errorMessage = error.message;
-    //console.log(errorMessage);
-    // ..
+    console.log(errorMessage);      
+   
   });
 
   }
 
 const userAdd = async(id)=>{
-    
-// Add a new document in collection "cities"
-    await setDoc(doc(db, "Users", id), {
+      await setDoc(doc(db, "Users", id), {
       id:id,
       name: User,
       email: email
@@ -233,31 +146,28 @@ const userAdd = async(id)=>{
   }
 
   const SignIn = ()=>{
-    //console.log(email);
-    //console.log(password);
+   
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in 
       const user = userCredential.user;
       localStorage.setItem("User",JSON.stringify(user))
-      //console.log(user);
       success()
     })
     .catch((error) => {
-      const errorCode = error.code;
+      // const errorCode = error.code;
       const errorMessage = error.message;
-      errors()
+      console.log(errorMessage);      
     });
   
 
 
   } 
-  const errors = () => {
-    Modal.error({
-      title: 'This is an error message',
-      content: 'some messages...some messages...',
-    });
-  };
+  // const errors = () => {
+  //   Modal.error({
+  //     title: 'This is an error message',
+  //     content: 'some messages...some messages...',
+  //   });
+  // };
 
   const success = () => {
     Modal.success({
@@ -282,18 +192,18 @@ const userAdd = async(id)=>{
     <>
     <Navbar  expand="lg" className='bg-[#3498db]'>
       <Container>
-        <Navbar.Brand href="#home" className='text-[25px] font-black text-white'>Queue App</Navbar.Brand>
+        <Navbar.Brand href="#home" className={`text-[25px] font-black ${mode === false ? "text-black":"text-white"}`}>Queue App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav " className=''>
           <Nav className="me-auto ">
-            <Nav.Link href="#home" className='text-[20px] font-black text-white'>{time}</Nav.Link>
-            <Nav.Link href="#link" className='text-[20px] font-black text-white'></Nav.Link>
+            <Nav.Link href="#home" className={`text-[20px] font-black ${mode === false ? "text-black":"text-white"}`}>{time}</Nav.Link>
+            <Nav.Link href="#link" className={`text-[20px] font-black ${mode === false ? "text-black":"text-white"}`}></Nav.Link>
            
           </Nav>
          {
-          name == false ? <Button variant="primary" onClick={showModal} >Login</Button>:
+          name === false ? <Button variant="primary" onClick={showModal} className={`text-[20px] font-black ${mode === false ? "text-black":"text-white"}`} >Login</Button>:
           <>
-          <div className="image w-[60px] h-[60px] border-2 border-black rounded-full">
+          <div className="image w-[60px] h-[60px]  rounded-full">
             <img className='w-full h-full rounded-full' src={user.photo} alt="" />
 
           </div>
@@ -302,12 +212,8 @@ const userAdd = async(id)=>{
           }
 
           <div className='ml-5'>
-        {
-          mode === true ? 
-          <MdOutlineLightMode onClick={()=> setMode(false)} className='text-3xl font-black cursor-pointer'/>:
-          <MdDarkMode onClick={()=> setMode(true)} className='text-3xl font-black cursor-pointer'/>
-          
-        }
+   
+        <button onClick={ToggleTheme}><FiToggleRight size={30} className="text-blacK "/></button>
  
           
         </div>
@@ -323,7 +229,7 @@ const userAdd = async(id)=>{
     <Modal title="Basic Modal" className='flex flex-col justify-around items-center' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <div className="w-[400px] h-[400px] flex flex-col justify-around items-center">
         
-        <div className="btns-group w-full h-[34px] border-2 border-black rounded-lg">
+        <div className="btns-group w-full h-[34px]  rounded-lg">
           <div className="btn-group w-full h-[30px]">
             <button className="btn btn-primary" onClick={()=>setPopup(false)}>Login</button>
             <button className="btn btn-primary"  onClick={()=>setPopup(true)}>Sign Up</button>
@@ -359,11 +265,10 @@ const userAdd = async(id)=>{
 
 
 
-        {/* <Button className='w-full' onClick={GoogleLogin}>Login With Google</Button> */}
         <Button className='w-full' onClick={fb}>
           Login With Facebook For Add Company
         </Button>
-        {/* <Button className='w-full' onClick={Gb}>Login With Github</Button> */}
+      
         
         
         </div>

@@ -11,12 +11,11 @@ import {
     Link
 } from './TokenConfig'
 import "./styles/index.css"
-import { Input ,Button } from 'antd';
+import { Input  } from 'antd';
 import { useSelector } from 'react-redux';
 
 function Tokenuser() {
-    const theme = useSelector(state=>state.ThemeReducer.theme)
-    document.body.style.backgroundColor = theme
+  
     const db = getFirestore(app)
 
     const [data,setData] = useState([]);
@@ -41,7 +40,7 @@ function Tokenuser() {
         results()
     },[])
 
-
+        const Theme = useSelector(state => state.ThemeReducer.user)
   return (
     <div>
        
@@ -64,7 +63,7 @@ text='Please wait us '
 :
 <>
     <Header/>
-        <div className="container-fluid h-[auto]  border-2 border-black flex flex-col justify-around items-center">
+        <div className="container-fluid h-[auto]   flex flex-col justify-around items-center">
 
 
             <div className="Search">
@@ -77,9 +76,9 @@ text='Please wait us '
                             <thead>
                                 <tr>
                        
-                                <th scope="col">Company Name</th>
-                                <th scope="col">Country</th>
-                                <th scope="col">View</th>
+                                <th scope="col" style={{color:"black"}} className={`${Theme === "#fff" ? "text-[#000]":"text-white"}`}>Company Name</th>
+                                <th scope="col" style={{color:"black"}} className={`${Theme === "#fff" ? "text-[#000]":"text-white"}`}>Country</th>
+                                <th scope="col" style={{color:"black"}} className={`${Theme === "#fff" ? "text-[#000]":"text-white"}`}>View</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,8 +92,8 @@ text='Please wait us '
                                   }).map((item)=>{
                 return (
                     <tr key={item.id}>
-                           <td> <p className='text-2xl font-black '>{item.Company_Name}</p></td>
-                            <td><p className='text-2xl font-black '>{item.Country}</p></td>
+                           <td> <p className={`text-2xl font-black `} >{item.Company_Name}</p></td>
+                            <td><p className={`text-2xl font-black `} >{item.Country}</p></td>
                             <td><Link to={`/userToken/${item.id}`} className="btn btn-secondary">View</Link></td>
                     </tr>
     

@@ -4,7 +4,7 @@ export default function reducer(state = {}, action) {
 
     switch (action.type) {
 
-        case 'SET_USER': return { ...state, user: action.data }
+        case 'SET_LOGIN_STATE': return { ...state, login: action.data }
 
    
         default: return state
