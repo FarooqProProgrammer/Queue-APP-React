@@ -41,6 +41,8 @@ function Tokenuser() {
     },[])
 
         const Theme = useSelector(state => state.ThemeReducer.user)
+        const Color = useSelector(state => state.ThemeReducer.theme)
+
   return (
     <div>
        
@@ -76,9 +78,9 @@ text='Please wait us '
                             <thead>
                                 <tr>
                        
-                                <th scope="col" style={{color:"black"}} className={`${Theme === "#fff" ? "text-[#000]":"text-white"}`}>Company Name</th>
-                                <th scope="col" style={{color:"black"}} className={`${Theme === "#fff" ? "text-[#000]":"text-white"}`}>Country</th>
-                                <th scope="col" style={{color:"black"}} className={`${Theme === "#fff" ? "text-[#000]":"text-white"}`}>View</th>
+                                <th scope="col" style={{color:"black"}} className={`${Color === "#fff" ? "text-[#000]":"text-white"}`}>Company Name</th>
+                                <th scope="col" style={{color:"black"}} className={`${Color === "#fff" ? "text-[#000]":"text-white"}`}>Country</th>
+                                <th scope="col" style={{color:"black"}} className={`${Color === "#fff" ? "text-[#000]":"text-white"}`}>View</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,8 +94,8 @@ text='Please wait us '
                                   }).map((item)=>{
                 return (
                     <tr key={item.id}>
-                           <td> <p className={`text-2xl font-black `} >{item.Company_Name}</p></td>
-                            <td><p className={`text-2xl font-black `} >{item.Country}</p></td>
+                           <td> <p className={`font-black text-3xl ${Color === "#fff" ? "text-[#000]":"text-white"}`} >{item.Company_Name}</p></td>
+                            <td><p className={`font-black text-3xl ${Color === "#fff" ? "text-[#000]":"text-white"}`} >{item.Country}</p></td>
                             <td><Link to={`/userToken/${item.id}`} className="btn btn-secondary">View</Link></td>
                     </tr>
     

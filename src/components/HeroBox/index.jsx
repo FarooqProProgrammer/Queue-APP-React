@@ -17,7 +17,7 @@ const HeroBox = () => {
       <h1 className={`title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"}`}>It is best Complete Queue App
         <br className="hidden lg:inline-block"/>
       </h1>
-      <p className={`mb-8 leading-relaxed ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"}`}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, repudiandae?.</p>
+      <p className={`mb-8 leading-relaxed font-black ml-10 mt-4 text-2xl ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"}`}>Very Comfort App </p>
       <div className="flex justify-center">
         {/* <Link to="/Admin" className={`inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"} no-underline`}>Company</Link>
         <Link to="/User"  className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg " style={{textDecoration:"none"}}>Token</Link>

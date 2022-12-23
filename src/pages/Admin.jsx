@@ -6,7 +6,6 @@ import {
   uploadBytesResumable,getDownloadURL,Companies,Country,State,City,
   AudioOutlined,getAuth
  } from './AdminConfig'
- import {SubmitInfo} from "./AdminConfig/functions"
 import { Footer } from './HomeConfig'
 import { useSelector } from 'react-redux'
 
@@ -81,6 +80,22 @@ const Admin = () => {
       //   document.body.style.backgroundColor = them
       // },[colorTheme])
       // setTheme(them)
+
+
+  async function SubmitInfo () {
+      const id = JSON.parse(localStorage.getItem("uid"))
+    const docRef = await addDoc(collection(db, "Company"), {
+      Company_Name: company_name,
+      Country: country,
+      End_Time:edTime,
+      Start_timing:stTime,
+      StartingYear:company_year,
+      Time:Date.now(),
+      url:url,
+      user:id
+    });
+    //console.log("Document written with ID: ", docRef.id);
+  }
      
 
 

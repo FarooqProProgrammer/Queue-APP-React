@@ -24,15 +24,17 @@ import { useSelector } from "react-redux";
 
 function Tokens() {
   const time = useSelector(state => state.TimeReducer.time)
-  useEffect(()=>{
-    
-  },[])
  
+  const Color = useSelector(state => state.ThemeReducer.theme)
+  console.log(Color);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const storage = getStorage(app)
 
+  const db = getFirestore(app)
+  const [single,setSingle] = useState([]);
 
+  const {id} = useParams();
   const fileTypes = ["JPG", "PNG", "GIF"];
 
 
@@ -57,10 +59,7 @@ function Tokens() {
 
 
 
-    const db = getFirestore(app)
-    const [single,setSingle] = useState([]);
-
-    const {id} = useParams();
+   
 
 
     useEffect(()=>{
@@ -203,7 +202,7 @@ function Tokens() {
     
     <div class="w-[250px]  h-[150px] ">
     {/* <Button className="w-full bt btn btn-primary ">Update Token</Button> */}
-         <p className='text-4xl font-black text-center'>{tokess.TotalTokens !== tokess.start_token ? tokess.TotalTokens :"Token is full"}</p>
+         <p className={`text-4xl font-black text-center ${Color === '#fff'? "text-black" : "text-white" } `}>{tokess.TotalTokens !== tokess.start_token ? tokess.TotalTokens :"Token is full"}</p>
     </div>
 
 

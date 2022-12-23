@@ -97,7 +97,7 @@ function Header() {
     })
     .catch((error) => {
       const errorMessage = error.message;
-      // console.log(errorMessage);      
+      // //console.log(errorMessage);      
     });
   }
 
@@ -132,7 +132,7 @@ function Header() {
   })
   .catch((error) => {
     const errorMessage = error.message;
-    // console.log(errorMessage);      
+    // //console.log(errorMessage);      
    
   });
 
@@ -161,7 +161,7 @@ const userAdd = async(id)=>{
     .catch((error) => {
       // const errorCode = error.code;
       const errorMessage = error.message;
-      // console.log(errorMessage);      
+      // //console.log(errorMessage);      
     });
   
 
