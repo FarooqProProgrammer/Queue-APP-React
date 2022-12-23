@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const HeroBox = () => {
   // const navigate = useNavigate();
   const Theme = useSelector(state => state.ThemeReducer.theme)
-  console.log(Theme);
+  // console.log(Theme);
   return (
 
 
@@ -22,7 +22,7 @@ const HeroBox = () => {
         {/* <Link to="/Admin" className={`inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"} no-underline`}>Company</Link>
         <Link to="/User"  className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg " style={{textDecoration:"none"}}>Token</Link>
        */}
-       <p className='text-3xl font-black ml-4 cursor-pointer'> Login To continue</p>
+       {/* <p className='text-3xl font-black ml-4 cursor-pointer'> Login To continue</p> */}
       </div>
     </div>
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">

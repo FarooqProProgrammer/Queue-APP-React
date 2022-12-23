@@ -11,16 +11,16 @@ const Companies = () => {
   const auth = getAuth(app)
   
   const [Companies,setCompanies ] = useState([])
-  //console.log(Companies);
-  //console.log(typeof(Companies));
+  //// console.log(Companies);
+  //// console.log(typeof(Companies));
 
 
   useEffect(()=>{
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // const uid = user.uid;
-        // //console.log(uid);
-        //console.log(user);
+        // //// console.log(uid);
+        //// console.log(user);
         localStorage.setItem("uid",JSON.stringify(user.uid))
     
       } else {
@@ -41,7 +41,7 @@ const Companies = () => {
           cities.push({id:doc.id,...doc.data()});
           setCompanies(cities)
       });
-      //console.log(Companies);
+      //// console.log(Companies);
     });
   }
   const Theme = useSelector(state => state.ThemeReducer.theme)

@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import './index.css'
-
+import Queue from "../../Assets/Queue.png"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -97,7 +97,7 @@ function Header() {
     })
     .catch((error) => {
       const errorMessage = error.message;
-      console.log(errorMessage);      
+      // console.log(errorMessage);      
     });
   }
 
@@ -132,7 +132,7 @@ function Header() {
   })
   .catch((error) => {
     const errorMessage = error.message;
-    console.log(errorMessage);      
+    // console.log(errorMessage);      
    
   });
 
@@ -161,7 +161,7 @@ const userAdd = async(id)=>{
     .catch((error) => {
       // const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);      
+      // console.log(errorMessage);      
     });
   
 
@@ -197,7 +197,9 @@ const userAdd = async(id)=>{
     <>
     <Navbar  expand="lg" className='bg-[#3498db]'>
       <Container>
-        <Navbar.Brand onClick={()=> navigate("/")} className={`text-[25px] font-black ${mode === false ? "text-black":"text-white"}`}>Queue App</Navbar.Brand>
+        <Navbar.Brand onClick={()=> navigate("/")} className={`text-[25px] font-black ${mode === false ? "text-black":"text-white"}`}>
+          <img className='w-[50px] h-[50px]' src={Queue} alt="" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav " className=''>
           <Nav className="me-auto ">
@@ -209,7 +211,8 @@ const userAdd = async(id)=>{
 
         
          {
-          name === false ? <Button variant="primary" onClick={showModal} className={`text-[20px] font-black ${mode === false ? "text-black":"text-white"}`} >Login</Button>:
+          name === false ? 
+          <Button variant="primary" onClick={showModal} className={`loginpopup w-[100px] text-[30px] bg-[#7f8c8d]  font-black ${mode === false ? "text-black":"text-white"}`} >Login</Button>:
           <>
           <div className="image w-[60px] h-[60px]  rounded-full">
             <img className='w-full h-full rounded-full' src={user.photo} alt="" />

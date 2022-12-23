@@ -16,7 +16,7 @@ function Admin() {
     const auth = getAuth(app)
 
     const user = auth.currentUser;
-    //console.log(user);
+    //// console.log(user);
 
 // ===================================================================================================
     const [company_name,setCompanyName] = useState("");
@@ -29,7 +29,7 @@ function Admin() {
 
     const Company_Name = (e)=>{
         setCompanyName(e.target.value)
-        //console.log(e.target.value);
+        //// console.log(e.target.value);
     }
     const Company_year = (e)=>{
         setCompanyYear(e.target.value)
@@ -42,13 +42,13 @@ function Admin() {
     }
     const [country_name,setCountryName] = useState()
     const SubmitInfo =async ()=>{
-      console.log(user.uid);
-      console.log(company_name);
-      console.log(company_year);
-      console.log(stTime);
-      console.log(edTime);
-      console.log(country_name);
-      console.log(url);
+      // console.log(user.uid);
+      // console.log(company_name);
+      // console.log(company_year);
+      // console.log(stTime);
+      // console.log(edTime);
+      // console.log(country_name);
+      // console.log(url);
 
       const docRef = await addDoc(collection(db, "Company"), {
         user:user.uid,
@@ -67,14 +67,13 @@ function Admin() {
     const showModal = () => {
       setIsModalOpen(true);
     };
+    let them = useSelector(state =>state.ThemeReducer.theme)
+      setTheme(them)
+      document.body.style.backgroundColor = them
     const handleOk = () => {
       setIsModalOpen(false);
 
-      let them = useSelector(state =>state.ThemeReducer.theme)
-      setTheme(them)
-      document.body.style.backgroundColor = them
-
-
+    
     };
     const handleCancel = () => {
       setIsModalOpen(false);
@@ -86,9 +85,9 @@ function Admin() {
 
 useEffect(()=>{
       
-      // //console.log(Country.getAllCountries())
+      // //// console.log(Country.getAllCountries())
       setCountry(Country.getAllCountries())
-      //console.log(State.getAllStates())
+      //// console.log(State.getAllStates())
     },[])
 
 
@@ -116,15 +115,15 @@ useEffect(()=>{
         let flag = false
         for(let i =0;i<country.length;i++){
             if(country[i].name === value){
-              // //console.log(i);
-                //console.log(country[i].name);
+              // //// console.log(i);
+                //// console.log(country[i].name);
                 success(country[i].name)
             }
             flag = true
         }
 
 
-      //console.log("Search");
+      //// console.log("Search");
     }
 
 
@@ -140,12 +139,12 @@ useEffect(()=>{
     
       // const storageRef = ref(storage, `images/${image.name}`)
       // uploadBytes(storageRef,image).then(()=>{
-      //   console.log("Image Uploaded");
+      //   // console.log("Image Uploaded");
       // })
       //   getDownloadURL(ref(storage, storageRef))
       //   .then((url) => {
         
-      //       console.log(url);
+      //       // console.log(url);
       //       setUrl(url)
          
       //   })
