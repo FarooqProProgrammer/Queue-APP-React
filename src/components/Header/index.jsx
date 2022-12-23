@@ -197,7 +197,7 @@ const userAdd = async(id)=>{
     <>
     <Navbar  expand="lg" className='bg-[#3498db]'>
       <Container>
-        <Navbar.Brand href="#home" className={`text-[25px] font-black ${mode === false ? "text-black":"text-white"}`}>Queue App</Navbar.Brand>
+        <Navbar.Brand onClick={()=> navigate("/")} className={`text-[25px] font-black ${mode === false ? "text-black":"text-white"}`}>Queue App</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav " className=''>
           <Nav className="me-auto ">

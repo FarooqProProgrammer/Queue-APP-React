@@ -98,7 +98,8 @@ function Tokens() {
    
       const docRef = await setDoc(doc(db, `/Company/${id}/Tokens`, `Tokens${id}`), {
         TotalTokens: Number(Start),
-        start_token: Total
+        start_token: Total,
+        CounterToken:0
         
       });
     }

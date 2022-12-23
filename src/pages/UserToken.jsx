@@ -1,9 +1,13 @@
 import { Footer } from "./HomeConfig";
 import { FileUploader } from "react-drag-drop-files";
+import { increment } from "firebase/firestore";
 import {getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {
   Modal ,
   doc ,
+  getDocs,
+  where,
+  query,
   updateDoc,
   useEffect ,
   useState ,
@@ -50,8 +54,71 @@ function UserToken() {
     setIsModalOpen(false);
   };
 
-  
+    let [tokenUpdate,setTokenUpdate] = useState()
+    const [data,setData] = useState('');
+   useEffect(()=>{
+    setTimeout(async ()=>{
+      console.log(tokenId);
+      console.log(id)
 
+      const userID = JSON.parse(localStorage.getItem("User"))
+      const q = query(collection(db, `/Company/${id}/Tokens/${tokenId}/TokenBuyer`), where("userID", "==", userID.uid));
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        console.log({id:doc.id,... doc.data()});
+        setData(doc.data().TokenNo)
+        console.log(data)
+        
+      });
+     
+
+
+      const docRef = doc(db, `/Company/${id}/Tokens/${tokenId}`);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setTokenUpdate(docSnap.data().CounterToken)
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+
+        console.log(data);
+        console.log(tokenUpdate);
+         
+    
+      const washingtonRef = doc(db, `/Company/${id}/Tokens/${tokenId}`);
+
+     
+       updateDoc(washingtonRef, {
+        CounterToken:increment(1)  
+      });
+
+
+      // if(data === tokenUpdate ) {
+      //   alert("Your Token")
+      // }
+
+
+
+     
+     
+
+
+
+
+    },10000)
+   },[tokenUpdate])
+
+    // async function updateTokens () {
+     
+
+
+    // }
 
 
 
@@ -61,12 +128,17 @@ function UserToken() {
     const {id} = useParams();
     
     const [url,setUrl] = useState();
-      async function addToken(Name,email){
+      async function addToken(Name,email,Token){
+        console.log(url)
+        const loginUser = JSON.parse(localStorage.getItem("User"))
         const docRef = await addDoc(collection(db, `/Company/${id}/Tokens/${tokenId}/TokenBuyer`), {
           name: Name,
           Email: email,
-          Image:url
+          Image:url,
+          TokenNo:Token+1,
+          userID:loginUser.uid
         });
+        console.log(docRef)
       }
 
 
@@ -85,6 +157,8 @@ function UserToken() {
         // doc.data() will be undefined in this case
         }
     }
+
+
 
 
 
@@ -133,9 +207,9 @@ function UserToken() {
 
     const update = async() =>{
       
-      
+    console.log()
     uploadImage(file)
-    addToken(Name,email)      
+    addToken(Name,email,Number(tokess.TotalTokens))      
    
 
       if(time  === "11:59:00 PM"){
@@ -147,7 +221,7 @@ function UserToken() {
         });
   
       }
-    
+     
       const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
 
       // Set the "capital" field of the city 'DC'
