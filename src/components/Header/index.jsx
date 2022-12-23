@@ -6,8 +6,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import {Modal,Input } from 'antd';
-import { GoogleAuthProvider,getAuth ,signInWithPopup,signInWithEmailAndPassword} from "firebase/auth";
-import {  FacebookAuthProvider,GithubAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth ,signInWithPopup,signInWithEmailAndPassword} from "firebase/auth";
+import {  FacebookAuthProvider,createUserWithEmailAndPassword } from "firebase/auth";
 import app from '../../config/Firebase';
 import { doc, getFirestore, setDoc} from "firebase/firestore"; 
 import { setUserInfo } from '../../Redux/Action/User';
@@ -17,18 +17,15 @@ import { Time } from '../../Redux/Action/TimeAction';
 import { setTheme } from '../../Redux/Action/ThemeAction';
 import {FiToggleRight} from "react-icons/fi"
 import { LoginState } from '../../Redux/Action/LoginState';
+import { useNavigate } from 'react-router-dom';
 
 
 function Header() {
-  // console.log(time);
  
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(state => state.Userreducer.user)
-
-  //console.log("Pakistan");
   const [name,setName] = useState(false)
-
-
   const [popup,setPopup] = useState(false)
   
 
@@ -95,6 +92,7 @@ function Header() {
       setName(true)
       dispatch(LoginState(name))
       dispatch(setUserInfo(userInfo))
+      navigate("/Admin")
       const credential = FacebookAuthProvider.credentialFromResult(result);
     })
     .catch((error) => {
@@ -157,6 +155,7 @@ const userAdd = async(id)=>{
     .then((userCredential) => {
       const user = userCredential.user;
       localStorage.setItem("User",JSON.stringify(user))
+      navigate("/User")
       success()
     })
     .catch((error) => {

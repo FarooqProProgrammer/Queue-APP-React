@@ -11,15 +11,14 @@ import {
   getFirestore ,
   collection ,
   addDoc ,
-  setDoc ,
   Input ,
   app ,
   useParams ,
-  Link ,
   Header ,
   Button 
 } from "./TokenConfig"
 import { useSelector } from "react-redux";
+import StopWatch from "../Re-useable/StopWatch";
 
 function UserToken() {
   const [tokenId,setTokenId] = useState()
@@ -213,6 +212,7 @@ function UserToken() {
 
     
     <div class="w-[250px]  h-[150px] ">
+    <StopWatch/>
     <Button className="w-full bt btn btn-primary " onClick={tokess.TotalTokens !== tokess.start_token ?showModal:""}>Update Token</Button>
          <p className='text-4xl font-black text-center'>{tokess.TotalTokens !== tokess.start_token ? tokess.TotalTokens :"Token is full"}</p>
     </div>

@@ -19,12 +19,14 @@ const HeroBox = () => {
       </h1>
       <p className={`mb-8 leading-relaxed ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"}`}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, repudiandae?.</p>
       <div className="flex justify-center">
-        <Link to="/Admin" className={`inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"}`}>Company</Link>
+        {/* <Link to="/Admin" className={`inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg ${Theme === "#fff" ? "text-[#000]" : "text-[#fff]"} no-underline`}>Company</Link>
         <Link to="/User"  className="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg " style={{textDecoration:"none"}}>Token</Link>
+       */}
+       <p className='text-3xl font-black ml-4 cursor-pointer'> Login To continue</p>
       </div>
     </div>
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-      <img className="object-cover object-center rounded" alt="hero" src="https://images.unsplash.com/photo-1664575600796-ffa828c5cb6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwyMXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"/>
+      <img className="object-cover object-center rounded" alt="hero" src="https://media.istockphoto.com/id/991877470/photo/business-people-standing-in-queue-at-airport.jpg?s=612x612&w=0&k=20&c=dBtHFz6PrbssH6qJFLv7m9sFwfPNTMf7C5HGIBM1dk0="/>
     </div>
   </div>
 </section>
