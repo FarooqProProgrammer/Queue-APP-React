@@ -26,7 +26,7 @@ function Tokens() {
   const time = useSelector(state => state.TimeReducer.time)
  
   const Color = useSelector(state => state.ThemeReducer.theme)
-  console.log(Color);
+  
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const storage = getStorage(app)

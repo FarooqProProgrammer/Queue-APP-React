@@ -1,6 +1,7 @@
 import { Footer } from "./HomeConfig";
 import { FileUploader } from "react-drag-drop-files";
 import { increment } from "firebase/firestore";
+import {onSnapshot} from "firebase/firestore"
 import {getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {
   Modal ,
@@ -43,7 +44,6 @@ function UserToken() {
   const [file, setFile] = useState(null);
   const handleChange = (file) => {
     setFile(file);
-
   } 
   const showModal = () => {
     setIsModalOpen(true);
@@ -75,18 +75,21 @@ function UserToken() {
    
    useEffect(()=>{
     const token = async() =>{
-      const docRef = doc(db, `/Company/${id}/Tokens/Tokens${id}`);
-      const docSnap = await getDoc(docRef);
+      // const docRef = doc(db, `/Company/${id}/Tokens/Tokens${id}`);
+      // const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        setTokenId(docSnap.id)
-        //console.log(docSnap.id)
-        setToken(docSnap.data())
-      } else {
-        //console.log("No Document");
-      }
+      // if (docSnap.exists()) {
+      //   setTokenId(docSnap.id)
+      //   //console.log(docSnap.id)
+      //   setToken(docSnap.data())
+      // } else {
+      //   //console.log("No Document");
+      // }
 
-
+      const unsub = onSnapshot(doc(db, `/Company/${id}/Tokens/Tokens${id}`), (doc) => {
+        setTokenId(doc.id)
+        setToken(doc.data())
+    });
     }
     var timer ;
     token()
@@ -171,7 +174,9 @@ function UserToken() {
         }
     }
 
-
+    
+      
+   
 
 
 
@@ -183,29 +188,15 @@ function UserToken() {
       const storageRef = ref(storage, `Token/${image.name}`)
       const snapshot = await uploadBytes(storageRef, image)
       const url = await getDownloadURL(snapshot.ref)
+      
       setUrl(url)
     }
-  
-
-
-  
-
-
-
-
-  
-
-
-
-
     // =====================================================================================
     const [updateToken,setupdate] = useState(tokess.TotalTokens)
     const [Name,setName] = useState();
     const [email,setEmail] = useState()
      
-    useEffect(()=>{
-      uploadImage(file)
-    },[])
+    
     const update = async() =>{
     
 
@@ -220,7 +211,7 @@ function UserToken() {
         });
   
       }
-     
+      uploadImage(file)
       const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
 
       // Set the "capital" field of the city 'DC'
