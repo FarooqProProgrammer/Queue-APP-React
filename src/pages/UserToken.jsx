@@ -22,7 +22,6 @@ import {
   Button 
 } from "./TokenConfig"
 import { useSelector } from "react-redux";
-import StopWatch from "../Re-useable/StopWatch";
 
 function UserToken() {
   const db = getFirestore(app)
@@ -92,11 +91,7 @@ function UserToken() {
     var timer ;
     token()
     timer =  setTimeout(async ()=>{
-      
 
-      //console.log(tokenId);
-      //console.log(id)
-      //console.log(tokenId)
       if(data === tokenUpdate ) {
         alert("Your Token")
       }
@@ -118,38 +113,18 @@ function UserToken() {
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        //console.log(doc.id, " => ", doc.data());
-        //console.log({id:doc.id,... doc.data()});
         setData(doc.data().TokenNo)
-        //console.log(data)
-        
       });
      
 
-      //console.log(tokenId);
       const docRef = doc(db, `/Company/${id}/Tokens/${tokenId}`);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        //console.log("Document data:", docSnap.data());
         setTokenUpdate(docSnap.data().CounterToken)
       } else {
-        // doc.data() will be undefined in this case
-        //console.log("No such document!");
+        alert("No Such Document")
       }
-
-        //console.log(data);
-        //console.log(tokenUpdate);
-         
-      
-
-
-     
-     
-
-
-
 
     },600000)
     return () => {
@@ -169,7 +144,6 @@ function UserToken() {
     
     const [url,setUrl] = useState();
       async function addToken(Name,email,Token){
-        //console.log(url)
         const loginUser = JSON.parse(localStorage.getItem("User"))
         const docRef = await addDoc(collection(db, `/Company/${id}/Tokens/${tokenId}/TokenBuyer`), {
           name: Name,
@@ -178,7 +152,6 @@ function UserToken() {
           TokenNo:Token+1,
           userID:loginUser.uid
         });
-        //console.log(docRef)
       }
 
 
@@ -230,14 +203,14 @@ function UserToken() {
     const [Name,setName] = useState();
     const [email,setEmail] = useState()
      
-
+    useEffect(()=>{
+      uploadImage(file)
+    },[])
     const update = async() =>{
-      
-    //console.log()
-    uploadImage(file)
+    
+
     addToken(Name,email,Number(tokess.TotalTokens))      
    
-
       if(time  === "11:59:00 PM"){
         const washingtonRef = doc(db,  `/Company/${id}/Tokens/Tokens${id}`);
 
